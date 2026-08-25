@@ -382,3 +382,126 @@ let's understand the difference:
   ```
 
 <span style="color:red"> Note:- use quite() methods for simple projects where you're completely finished with browser.</span>
+
+### Browser Life cycle (open, navigate, close) code
+
+```java
+public class FirstSeleniumTest {
+  public static void main(String[] args) {
+    WebDriver driver = new ChromeDriver();
+    driver.get("https://google.com");
+
+    driver.close(); // For closing the recent tab that were opened
+    driver.quite();
+  }
+}
+```
+
+### Selenium Architecture
+
+Understanding what happens between your java code and then browser.
+
+We already established yet:
+
+```java
+WebDriver driver = new ChromeDriver();
+driver.get("https://google.com");
+```
+
+This doesn't mean java directly controls the website.
+A simplified model is:
+
+```
+Your Java code
+      ↓
+Selenium WebDriver API
+      ↓
+WebDriver communication
+      ↓
+    Chrome
+      ↓
+    Website
+```
+
+The key question is: **What is WebDriver communication?**
+
+When you write:
+
+```java
+driver.get("https://google.com");
+```
+
+Your java program needs some standardized way to tell the browser to navigate to this URL.
+
+That's where the **W3C WebDriver standard** comes in.
+Think of this W3C WebDriver specification as a standard contract for browser automation.
+
+Conceptually:
+
+```
+             W3C WebDriver Standard
+              /        |        \
+             /         |         \
+        Chrome       Firefox     Edge
+```
+
+This is the reason WebDriver isn't simply "a Chrome thing".
+
+Your Java code can use the same general WebDriver API while the underlying browser changes:
+
+```java
+WebDriver driver = new ChromeDriver();
+```
+
+or:
+
+```java
+WebDriver driver = new FirefoxDriver();
+```
+
+### What Selenium Can and Cannot Automate
+
+A common biginner mistake is to think:
+
+"Selenium can automate anything I can do in Chrome"
+
+Not quite:
+
+"Selenium is primiraly a web browser automation tool."
+
+**Good Use Cases**
+e.g.,
+
+```
+Open website
+    ↓
+  Login
+    ↓
+Fill form
+    ↓
+Click buttons
+    ↓
+Navigate pages
+    ↓
+Read web elements
+    ↓
+Verify results
+```
+
+Thats what selenium is exactly designed for.
+
+Suppose your application has a button that launches the operating system's:
+
+```text
+Linux file manager
+```
+
+or you need to interact with:
+
+```text
+Terminal
+Desktop Application
+Operating-system settings
+```
+
+Selenium not appropriate for these things?
