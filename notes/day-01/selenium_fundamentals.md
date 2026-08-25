@@ -321,4 +321,64 @@ public class FirstSeleniumTest {
 
 Ans:
 This code will open the chrome browser and stays it open.
-here we are using **ChromeDriver** just for learning if you want to use another one you have different choices like **FirefoxDriver**, **SafariDriver** (Notes:- name can be wrong),...etc.
+here we are using **ChromeDriver** just for learning if you want to use another one you have different choices like **FirefoxDriver**, **SafariDriver** (Notes:- names can be wrong),...etc.
+
+### Let's Learn how to open a web page with selenium
+
+Opening the youtube website with our code:
+
+since you have the earlier script you have to call the `get` method.
+
+```java
+driver.get("https://youtube.com");
+```
+
+#### what does get() method do?
+
+Ans: Get method take an url as an parameter and load a new web page in current browser (CHECK:- The URL should be a leagal and registered). It follows the http operations to navigate to given operations.
+
+### Now we have to close what we opened
+
+In recent program i have opened two things first one is `Chrome Browser` and second is `youtube web page`.
+
+To close we get 2 different methods:
+
+- close()
+- quite()
+
+let's understand the difference:
+
+1. **close()**
+
+- close method is used to close the webpages that we opened with our `get()` method.
+
+- ```java
+    Chrome
+    ├── Tab 1 ← current
+    └── Tab 2
+  ```
+- ```java
+    driver.close();
+  ```
+- If that was the only tab/window, the browser may disappear as a consequence.
+
+2. **quite()**
+
+- `quite()` ends the entire WebDriver session and close all browser window/tabs belonging to that tabs.
+
+- ```text
+    Chrome
+    ├── Tab 1
+    ├── Tab 2
+    └── Tab 3
+
+            ↓ driver.quit()
+  WebDriver session terminated
+  Chrome closed
+  ```
+
+- ```java
+  driver.quite();
+  ```
+
+<span style="color:red"> Note:- use quite() methods for simple projects where you're completely finished with browser.</span>

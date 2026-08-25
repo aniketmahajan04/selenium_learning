@@ -7,5 +7,7 @@ public class FirstSeleniumTest {
     public static void main(String[] args) {
         WebDriver driver = new ChromeDriver();
         driver.get("https://youtube.com");
+
+        driver.quit();
     }
 }
