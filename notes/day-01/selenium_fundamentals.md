@@ -292,3 +292,33 @@ You're telling Maven:
 Compile this project using Java 21
 
 **To add dependencies here we get <dependencies> tag that inclose the dependencies**
+
+Note → dependencies are just code writen by some one that you can use it in your code.
+
+e.g.,
+
+```xml
+<dependencies>
+    <dependency>
+        <groupId>org.seleniumhq.selenium</groupId>
+        <artifactId>selenium-java</artifactId>
+        <version>4.35.0</version>
+    </dependency>
+</dependencies>
+```
+
+Let's create our first selenium script to open Chrome:
+
+```java
+public class FirstSeleniumTest {
+  public static void main(String[] args) {
+    WebDriver driver = new ChromeDriver();
+  }
+}
+```
+
+#### What will this code do?
+
+Ans:
+This code will open the chrome browser and stays it open.
+here we are using **ChromeDriver** just for learning if you want to use another one you have different choices like **FirefoxDriver**, **SafariDriver** (Notes:- name can be wrong),...etc.
