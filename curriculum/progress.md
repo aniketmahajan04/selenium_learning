@@ -95,3 +95,62 @@ Day 2 — HTML, DOM and Web Elements
 ## Last Updated
 
 Day 1 completed.
+
+### Day 2 - HTML, DOM and Web Elements
+
+- HTML basics
+- HTML elements/tags
+- HTML attributes
+- id
+- class
+- name
+- type
+- value
+- placeholder
+- DOM concept and tree structure
+- Parent/child relationships
+- Sibling relationships
+- Inspecting HTML with Chrome DevTools
+- Inspecting a real Google search field
+- Inspecting a real Selenium Web Form page
+- Identifying a button's tag, class, and type attributes
+- Identifying a text field's element, attributes, and parent
+- Reasoning about element relationships from HTML
+
+## What I Understand
+
+- An HTML element is represented by an HTML tag such as input, button, form, or textarea.
+
+- Attributes provide additional information about an HTML element.
+
+- id, class, name, type, value, and placeholder are common HTML attributes relevant to Selenium.
+
+- The DOM is a tree-like representation of a web document.
+
+- Elements can have parent/child relationships.
+
+- Elements that share the same parent are siblings.
+
+- DevTools can be used to inspect the actual DOM and element attributes of a web page.
+
+- A web element does not need to have every possible attribute; attributes may be missing.
+
+- A button can have multiple CSS classes in its class attribute.
+
+- Selenium locators will use information from the DOM/HTML to identify elements; locator strategies are the next day's topic.
+
+## Weak Areas
+
+- No weak areas.
+
+## Mistakes I Made
+
+- No major mistakes.
+
+## Next Lesson
+
+Day 3 - Slenium Locators
+
+## Last Updated
+
+Day 2 completed.
