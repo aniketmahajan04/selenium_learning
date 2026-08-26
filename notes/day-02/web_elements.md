@@ -166,3 +166,68 @@ Tell me:
 3. What class attribute does it have, if present?
 4. Does it have an id?
 5. What other useful attribute do you notice?
+
+### Element relationships in DevTools
+
+Suppose DevTools shows:
+
+```html
+<form>
+  <input id="username" />
+  <input id="password" />
+
+  <button class="btn btn-outline-primary" type="submit">Submit</button>
+</form>
+```
+
+Here:
+
+```
+form
+├── input#username
+├── input#password
+└── button
+```
+
+The `form` is the **parent**.
+
+The three elements inside it are **children**.
+And:
+
+```text
+input#username
+input#password
+buttono
+```
+
+are **sibling** because they share the same parent.
+
+<span style="color:green">Important:- This matters later because Selenium locators can use relationships between elements, especially with XPath.</span>
+
+#### Day 2 Final Challenge
+
+Q.
+
+```html
+<form id="login-form">
+  <label for="username">Username</label>
+  <input id="username" name="username" type="text" />
+
+  <label for="password">Password</label>
+  <input id="password" name="password" type="password" />
+
+  <button type="submit">Login</button>
+</form>
+```
+
+Answer these from your understanding:
+
+1. What is the parent of input#username?
+
+2. Is input#username a sibling of input#password?
+
+3. Is label for="username" a sibling of input#username?
+
+4. What are the children of <form id="login-form">?
+
+5. Which attributes could potentially help Selenium identify the username field later?
