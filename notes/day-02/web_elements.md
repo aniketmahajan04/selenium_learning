@@ -66,3 +66,65 @@ WebElement
 ```
 
 ### DOM (Document Object Model)
+
+Don't let the name scare you.
+
+Imagine this HTML:
+
+```html
+<html>
+  <body>
+    <h1>Login</h1>
+
+    <form>
+      <input id="username" />
+      <input id="password" />
+    </form>
+  </body>
+</html>
+```
+
+Browser doesn't keep this as flat block of text but it builds a **tree like representation** of the document.
+
+Conceptually:
+
+```text
+html
+└── body
+    ├── h1
+    │   └── "Login"
+    │
+    └── form
+        ├── input#username
+        ├── input#password
+        └── button
+            └── "Login"
+```
+
+this tree is the basic idea behind the **DOM**.
+
+##### Why does Selenium care about the DOM?
+
+Because Selenium interacts with **elements in the browser's document**.
+
+For example:
+
+```text
+DOM
+ │
+ ├── input
+ ├── button
+ ├── link
+ └── form
+       ↓
+   Selenium finds
+       ↓
+   WebElement
+```
+
+So we eventually write:
+
+```java
+// Don't worry about this we didn't introduced findElement yet
+WebElement button = driver.findElement(...);
+```
