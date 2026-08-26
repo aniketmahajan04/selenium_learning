@@ -8,7 +8,12 @@ public class Main {
         WebDriver driver = new ChromeDriver();
         driver.get("https://google.com");
         String webPageTitle = driver.getTitle();
-        System.out.println(webPageTitle);
+        if (webPageTitle.equals("Google")) {
+            System.out.println(webPageTitle);
+        } else {
+            System.out.println("Title is not what i expected");
+        }
+
         String currentUrl = driver.getCurrentUrl();
         System.out.println(currentUrl);
 
