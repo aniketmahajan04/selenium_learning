@@ -128,3 +128,41 @@ So we eventually write:
 // Don't worry about this we didn't introduced findElement yet
 WebElement button = driver.findElement(...);
 ```
+
+### Inspecting the DOM with DevTools
+
+Open Chrome and go to a simpel page such as:
+
+```text
+https://google.com
+```
+
+Then:
+**Right-click somewhere on page → Inspect**
+
+You should see Chrome DevTools.
+
+Look for the **Element** tab.
+
+You'll see HTMl similar to what we've been studying:
+
+```html
+<html>
+  <body>
+    ...
+  </body>
+</html>
+```
+
+**Your first real-world exercise**
+Find the Google search input using DevTools.
+
+Don't use Selenium yet.
+
+Tell me:
+
+1. What **HTML tag** is the search field?
+2. What name attribute does it have, if present?
+3. What class attribute does it have, if present?
+4. Does it have an id?
+5. What other useful attribute do you notice?
