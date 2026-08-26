@@ -17,4 +17,52 @@ Understand the structure of web page well enough that you can look at HTML and r
 
 ### HTML
 
-Before Selenium can interact with a webpage, you need to understand **what is selenium enteracting with**.
+Before Selenium can interact with a webpage, you need to understand **what is selenium interacting with**.
+
+Considering this simpel HTML:
+
+```html
+<button id="login-button" class="primary-button" type="submit">Login</button>
+```
+
+A normal human will see a login button but Selenium sees a **web element** represent by html.
+
+<span style="color:red">NOTE:- I am skipping HTML basics here.</span>
+
+### Why HTML matters for Selenium
+
+Suppose Selenium need to interact with this:
+
+```html
+<input id="email" class="userEmail" type="email" />
+```
+
+A human can look at the page and think:
+
+```text
+That's the email field.
+```
+
+But Selenium needs a **way to identify that exact element**.
+
+e.g.,
+
+```java
+driver.findElement(By.id("email"));
+```
+
+Notice what happened:
+
+```text
+HTML
+ ↓
+id="email"
+ ↓
+Selenium locator
+ ↓
+By.id("email")
+ ↓
+WebElement
+```
+
+### DOM (Document Object Model)
