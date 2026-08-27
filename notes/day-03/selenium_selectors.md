@@ -78,3 +78,108 @@ By.id("username");
 ```
 
 This isn't element itself. Its more like an **instruction for finding the element**.
+
+Later we will combine it with:
+
+```java
+driver.findElement(...);
+```
+
+to actually retrieve a `webElement`.
+
+For example:
+
+```java
+WebElement username = driver.findElement(By.id("username"));
+```
+
+Don't memorize this yet. Understand the separation.
+
+```text
+By.id("username")
+        ↓
+How to find it
+
+driver.findElement(...)
+        ↓
+Actually find it
+```
+
+### First reasoning exercise
+
+Consider this HTML:
+
+```html
+<input id="username" name="user" type="text" />
+```
+
+I give you these possible locators:
+
+```java
+By.id("username");
+By.name("user");
+By.tagName("input");
+```
+
+All three **could potentially find the element**.
+
+#### Question:
+
+Which one you choose as your **first preference**, and why?
+
+Tip:
+Think like an automation engineer:
+
+```text
+What makes one selector better than another?
+```
+
+<span style="color:green">IMP :- <b> Prefer a locator that is unique, stable, readable, and tied to the element's intended identity.</b><span>
+
+### By.id()
+
+Let's make your actual locator.
+
+Suppose our page contains:
+
+```html
+<input id="username" name="user" type="text" />
+```
+
+We can write:
+
+```java
+By.id("username");
+```
+
+And to retrieve the element:
+
+```java
+WebElement username = driver.findElement(By.id("username"));
+```
+
+_Hope you already know enough java to understand this basic structure:_
+
+```text
+driver
+  ↓
+findElement()
+  ↓
+By.id("username")
+  ↓
+WebElement
+```
+
+The key distiction:
+
+```java
+By.id("username");
+```
+
+is the **locator strategy**.
+
+```java
+driver.findElement(...);
+```
+
+is the **WebDriver operation that uses that strategy**.
