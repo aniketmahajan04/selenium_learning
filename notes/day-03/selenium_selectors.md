@@ -183,3 +183,224 @@ driver.findElement(...);
 ```
 
 is the **WebDriver operation that uses that strategy**.
+
+### Exercise - don't copy the answer
+
+On the selenium Web Form page you used yesterday, you found:
+Visit [Selenium Web Form page](https://www.selenium.dev/selenium/web/web-form.html)
+
+```html
+<input id="my-text-id" class="form-control" name="my-text" type="text" />
+```
+
+Write the Java statement that would locate this element using its id.
+
+You already know the pieces:
+
+```java
+driver.findElement(...);
+```
+
+and
+
+```java
+By.id(...);
+```
+
+put them together yourself.
+
+<span style="color:red">Note -> we are skipping name selector here dont worry it works same as id.</span>
+
+#### Now let's test locator uniqueness
+
+This is where things get interesting.
+
+On the Selenium Web Form page, you found:
+
+```html
+<input id="my-text-id" class="form-control" name="my-text" type="text" />
+```
+
+But there are other elements on the page that also have:
+
+```text
+class="form-control"
+```
+
+so imagine we write:
+
+```java
+driver.findElement(By.className("form-control"));
+```
+
+**What do you predict?**
+
+Suppose 5 elements have the class form-control.
+
+Will `findElement()`:
+
+A) Return all 5 elements
+
+B) Return the first matching element
+
+C) Throw an exception because there are multiple matches
+
+D) Randomly choose one of the 5
+
+Pick one and explain your reasoning.
+
+If you want to return **multiple elements that share same selector values you can user `driver.findElements()` method**.
+
+e.g.,
+
+```java
+ List<WebElement> textInputs = driver.findElements(By.className("form-control"));
+
+        for (WebElement we : textInputs) {
+            System.out.println(we.getAttribute("type"));
+        }
+```
+
+`findElements()` return the list of elements.
+
+**Compare these**
+
+```java
+By.id("my-text-id")
+```
+
+If that **ID** uniquely identifies your target → **✅ strong**.
+
+```java
+By.className("form-control")
+```
+
+If five elements use that class → **⚠️ potentially fragile**.
+
+### By.className()
+
+you already saw:
+
+```text
+className("form-control")
+```
+
+But here is a subtle detail:
+
+Suppose you HTML is:
+
+```html
+<button class="btn btn-outline-primary" type="submit">submit</button>
+```
+
+Can we write:
+
+```java
+By.className("btn btn-outline-primary")
+```
+
+Tell me:
+
+1. Is this valid?
+
+```java
+By.className("btn")
+```
+
+2. Is this valid?
+
+```java
+By.className("btn-outline-primary")
+```
+
+3. Is this valid?
+
+```java
+By.className("btn btn-outline-primary")
+```
+
+And most importantly:
+
+**Why?**
+
+<span style="color:red">Note -> we are skipping tagName selector here dont worry it works same as id.</span>
+
+### By.linkText()
+
+Now let's look at links:
+
+Suppose HTML is:
+
+```html
+<a href="/login">Login</a>
+```
+
+The visible text of the link is:
+
+```text
+Login
+```
+
+Selenium provides:
+
+```java
+By.linkText("Login");
+```
+
+This means:
+
+Find a link whose visible text matches **"Login"**.
+
+**Your turn**
+
+Suppose the page contains:
+
+```html
+<a href="/login">Login</a>
+<a href="/signup">Sign Up</a>
+<a href="/help">Help</a>
+```
+
+Would this:
+
+```java
+By.linkText("Login")
+```
+
+be a relatively specific locator?
+
+**Why?**
+
+And what do you think would happen if we instead used:
+
+```java
+By.linkText("Log")
+```
+
+For:
+
+```java
+By.linkText("Log")
+```
+
+Selenium does **not** treat "Log" as partial text. linkText() looks for the link's **full visible text**, so it would fail to find "Login".
+
+That's exactly why Selenium also provides:
+
+```java
+By.partialLinkText("Log")
+```
+
+which can match a link containing "Log" in its visible text.
+
+**Mental model**:
+
+```text
+By.linkText("Login")
+↓
+Exact link text
+
+By.partialLinkText("Log")
+↓
+Partial link text
+```
