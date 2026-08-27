@@ -35,6 +35,22 @@ public class FirstSeleniumSelector {
 
         WebElement linkWithHalfText = driver.findElement(By.partialLinkText("Return"));
         System.out.println(linkWithHalfText.getText());
+
+        WebElement button = driver.findElement(By.cssSelector("button[type='submit']"));
+
+        WebElement textInputWithCssSelector = driver
+                .findElement(By.cssSelector("input[name='my-text'][type='text']"));
+
+        System.out.println(textInputWithCssSelector.getAttribute("myprop"));
+
+        WebElement textInputWithXPath = driver.findElement(By.xpath("//input[@id='my-text-id']"));
+
+        System.out.println(textInputWithXPath.getTagName());
+
+        WebElement buttonWithXPath = driver.findElement(By.xpath("//button[text()='Submit']"));
+        System.out.println(buttonWithXPath.getText());
+
         // driver.quit();
+
     }
 }

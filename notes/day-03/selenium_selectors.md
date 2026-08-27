@@ -404,3 +404,276 @@ By.partialLinkText("Log")
 ↓
 Partial link text
 ```
+
+### By.cssSelector
+
+You already know this HTML:
+
+```html
+<input id="my-text-id" class="form-control" name="my-text" type="text" />
+```
+
+CSS has a syntax for selecting elements.
+
+For an **ID**:
+
+```css
+#my-text-id
+```
+
+For a **class**:
+
+```text
+.form-control
+```
+
+So Selenium can use them through:
+
+```java
+By.cssSelector("#my-text-id");
+```
+
+or
+
+```java
+By.cssSelector(".form-control");
+```
+
+Notice the difference from the Selenium methods you already learned:
+
+```java
+By.id("my-text-id");
+```
+
+versus:
+
+```java
+By.cssSelector("#my-text-id");
+```
+
+Both can same locate the same element, but CSS gives us much more flexiblity.
+
+#### Atrribute Selectors
+
+This is where CSS becomes useful.
+
+Given:
+
+```html
+<input id="my-text-id" name="my-text" type="text" />
+```
+
+we can select based on a attribute:
+
+```html
+input[name="my-text"]
+```
+
+and Selenium:
+
+```java
+By.cssSelector("input[name='my-text']");
+```
+
+Read it as:
+
+```text
+input
+   ↓
+element/tag
+
+[name='my-text']
+   ↓
+must have this attribute/value
+```
+
+So:
+
+```java
+By.cssSelectors("input[name='my-text']");
+```
+
+means:
+
+Find an input whose **name is my-text**.
+
+#### Why is this useful?
+
+Remember our earlier problem:
+
+```java
+By.tagName("input");
+```
+
+might match many inputs.
+
+But:
+
+```java
+By.cssSelector("input[name='my-text']");
+```
+
+is much more specific.
+
+We're combining:
+
+```text
+tag + attribute
+```
+
+instead of relying on only:
+
+```text
+tag
+```
+
+That's the beginning of **reliable locator constrution**.
+
+#### Your turn
+
+Use this HTML:
+
+```html
+<button class="btn btn-outline-primary" type="submit">Submit</button>
+```
+
+I want you to create a CSS selector that means:
+
+Find a `button` whose `type` is `submit`.
+
+Don't use `By.className()`.
+
+### By.xpath()
+
+**xpath** is a way of describing where an element is in the HTML/DOM tree.
+
+one simple xpath is:
+
+```text
+//button
+```
+
+Let's break that down.
+
+```text
+// → search from anywhere in the element
+button → find a button element
+```
+
+So:
+
+```
+//button
+```
+
+means find the element anywhere in the document.
+
+So xpath can become more specific.
+For example:
+
+```
+//button[@id='login']
+```
+
+Read this as:
+
+```
+//button
+       ↓
+       find a button
+
+[@id='login']
+       ↓
+       whose id is login
+```
+
+and in Selenium:
+
+```java
+By.xpath("//button[@id='login']");
+```
+
+Notice something familiar?
+You already know the HTML:
+
+```html
+id="login"
+```
+
+XPath is simply giving us a syntax for using that information.
+
+There are multiple xpath combinations you can try:
+e.g.,
+
+```java
+WebElement buttonWithXPath = driver.findElement(By.xpath("//button[text()='Submit']"));
+```
+
+Here we are locating element using xpath that says find `button` that has visible text `Submit`.
+
+<span style="color:red">NOTE:- search on google how many way to find a single elements with xpath.</span>
+
+#### Locator-choice exercise
+
+On the Selenium Web Form page, suppose the Submit button has:
+
+```html
+<button class="btn btn-outline-primary" type="submit">Submit</button>
+```
+
+You could potentially use:
+
+```java
+By.tagName("button")
+By.className("btn")
+By.cssSelector("button[type='submit']")
+By.xpath("//button[text()='Submit']")
+```
+
+**Your task**
+
+Rank these from strongest to weakest for this particular button.
+
+Don't worry about there being one universally correct ranking—I'm interested in your reasoning.
+
+For each one, tell me why you consider it strong or weak.
+
+### Now let's introduce dynamic attributes
+
+This is an important real-world problem.
+
+Imagine you inspect a login button today:
+
+```html
+<button id="login-847291" type="submit">Login</button>
+```
+
+Tomorrow the application generates:
+
+```html
+<button id="login-392814" type="submit">Login</button>
+```
+
+Your locator:
+
+```java
+By.id("login-847291")
+```
+
+now fails.
+
+But this:
+
+```java
+By.cssSelector("button[type='submit']")
+```
+
+might still work.
+
+**🧠 Your turn**
+
+Why would you call `id="login-847291"` a **fragile locator?**
+
+And what would you look for instead when inspecting the element?
+
+Give me your reasoning.
