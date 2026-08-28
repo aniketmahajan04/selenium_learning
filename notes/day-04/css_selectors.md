@@ -98,3 +98,95 @@ with:
 ```java
 By.cssSelector(".form-control");
 ```
+
+Both can find elements having that class.
+But CSS let us combine selectors.
+
+For example, your earlier button:
+
+```html
+<button class="btn btn-outline-primary" type="submit">Submit</button>
+```
+
+has **two classes**.
+
+CSS can express:
+
+```text
+.btn.btn-outline-primary
+```
+
+Notice:
+
+```text
+.btn
+   ↓
+has btn
+
+.btn-outline-primary
+   ↓
+AND has btn-outline-primary
+```
+
+No space between them.
+
+That's something `By.className()` connot express directly.
+
+### Attrubute selectors
+
+You've already used this:
+
+```text
+input[name='my-text']
+```
+
+This means:
+Find an `input` whose `name` attribute is exactly `my-text`.
+
+So there are two ideas:
+
+```
+[name='my-text']
+       ↓
+specific attribute value
+
+[name]
+       ↓
+attribute exists
+```
+
+### Multiple attributes
+
+You already accidentally discovered this one earlier:
+
+```
+input[name='my-text'][type='text']
+```
+
+This means:
+
+Find an `input` whose `name` is `my-text` **AND** whose `type` is `text`.
+
+Each [...] adds another condition to the same element.
+
+For example:
+
+```html
+<input name="my-text" type="text" />
+<input name="my-text" type="password" />
+<input name="other" type="text" />
+```
+
+Then:
+
+```
+input[name='my-text'][type='text']
+```
+
+matches only:
+
+```html
+<input name="my-text" type="text" />
+```
+
+This is **multiple attribute**.
