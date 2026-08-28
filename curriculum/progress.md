@@ -2,8 +2,8 @@
 
 ## Current Status
 
-- Current Day: Day 3
-- Current Topic: Selenium Locators
+- Current Day: Day 4
+- Current Topic: CSS Selectors
 - Status: Completed
 
 ## Completed
@@ -86,6 +86,27 @@
 - XPath `or` operator
 - Basic CSS vs XPath reasoning
 
+### Day 4 — CSS Selectors
+
+- CSS selector fundamentals
+- ID selectors using `#`
+- Class selectors using `.`
+- Attribute selectors
+- Attribute presence selectors
+- Exact attribute-value matching
+- Multiple attribute selectors
+- Descendant selectors using a space
+- Child selectors using `>`
+- Difference between descendants and direct children
+- Combining tag, class, and attribute selectors
+- `^=` starts-with attribute matching
+- `$=` ends-with attribute matching
+- `*=` contains attribute matching
+- Choosing simple selectors when a reliable ID exists
+- Using CSS selectors with Selenium's `By.cssSelector()`
+- Understanding that CSS selectors identify matching elements while `findElement()` returns the first matching element
+- Practical CSS selector construction using the Selenium Web Form page
+
 ## What I Understand
 
 - Selenium locators are strategies used to identify web elements in the DOM.
@@ -104,13 +125,25 @@
 - Dynamic IDs can make locators fragile.
 - CSS and XPath can both locate the same element; the choice should depend on reliability, stability, readability, and simplicity.
 - A simple reliable locator is preferable to an unnecessarily complicated locator.
+- `#` represents an ID selector in CSS.
+- `.` represents a class selector in CSS.
+- A CSS space represents a descendant relationship.
+- `>` represents a direct-child relationship.
+- Multiple CSS attribute conditions without a space apply to the same element.
+- `^=` means an attribute value starts with a specified value.
+- `$=` means an attribute value ends with a specified value.
+- `*=` means an attribute value contains a specified value.
+- CSS selectors can combine tags, classes, attributes, and relationships.
+- A CSS selector itself can match multiple elements; `findElement()` returns the first matching element.
+- A more complicated locator is not automatically a better locator.
 
 ## Weak Areas
 
-- Advanced CSS selector syntax has not yet been covered in depth.
+- Advanced CSS selector syntax has not yet been covered beyond the Day 4 curriculum.
 - Advanced XPath functions and relationships have not yet been covered.
 - Locator strategies have been practiced, but large-scale locator design and maintainability will need reinforcement through later exercises.
 - Formal test assertions have not been learned yet and will be covered later with TestNG.
+- Day 4 practical exercise was completed under a time constraint, so some selectors were demonstrated in a shortened form rather than producing 15 fully documented examples.
 
 ## Exercises Completed
 
@@ -150,6 +183,21 @@
 - Practiced XPath `and` and `or` conditions.
 - Completed the 10+ locator practical exercise using the Selenium Web Form page.
 
+### Day 4
+
+- Practiced ID CSS selectors.
+- Practiced class CSS selectors.
+- Practiced attribute selectors.
+- Practiced multiple attribute selectors.
+- Practiced descendant selectors.
+- Practiced child selectors.
+- Practiced combined CSS selectors.
+- Practiced `^=` starts-with selectors.
+- Practiced `$=` ends-with selectors.
+- Practiced `*=` contains selectors.
+- Built selectors using the actual Selenium Web Form page.
+- Verified CSS locator behavior with Selenium.
+
 ## Mistakes I Made
 
 - Initially thought `WebDriver` was an abstract class; corrected to understand that it is a Java interface.
@@ -162,6 +210,8 @@
 - Initially used complete link text with `partialLinkText()`, then understood that partial link text should demonstrate a partial match.
 - Initially wrote an XPath `and` condition without the `@` before the attribute name; corrected to `@type='submit'`.
 - Initially placed an XPath `or` condition inside the `text()` string; corrected to separate XPath conditions.
+- Initially wrote an incorrect CSS selector syntax for an attribute ending match and corrected it to `[name$='email']`.
+- Initially used `lable` instead of `label` in one CSS selector exercise; this was a spelling mistake rather than a misunderstanding of descendant selectors.
 
 ## Current Project
 
@@ -172,11 +222,12 @@
 - IDE: IntelliJ IDEA
 - Browser: Chrome/Chromium
 - First Selenium class: `com.sendo.Main`
+- Main practice website: Selenium Web Form
 
 ## Next Lesson
 
-Day 4 — CSS Selectors
+Day 5 — XPath
 
 ## Last Updated
 
-Day 3 completed.
+Day 4 completed.
