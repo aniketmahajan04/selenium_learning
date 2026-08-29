@@ -109,3 +109,90 @@ may break because the DOM hierarchy changed.
 But:
 
 **That's why professional Selenium code generally avoids unnecessarily long absolute XPath expressions.**
+
+### XPATH `contains()`
+
+Suppose an element has a dynamic ID:
+
+```html
+<input id="user-input-847291" />
+```
+
+and tomorrow it becomes:
+
+```html
+<input id="user-input-392817" />
+```
+
+we already know this is fragile:
+
+```java
+By.id("user-input-847191");
+```
+
+But notice that the **stable part** is:
+
+```text
+user-input-
+```
+
+XPATH's `contains()` allows us to say:
+
+```text
+//input[contains(@id, 'my-input-')]
+```
+
+Read it as:
+
+```text
+contains(
+    @id,
+    'user-input-'
+)
+```
+
+The `id` attribute contains `user-input-`.
+
+So it can survive changes to the dynamic portion.
+
+**Now let's apply `contains()` with text**
+
+You already learned:
+
+```
+//button[text()='submit']
+```
+
+that's and **exact text match**:
+
+But imagine:
+
+```html
+<button>Submit Form</button>
+```
+
+This would **not** match:
+
+```
+//button[text()='Submit']
+```
+
+because the complete text is `Submit Form`.
+
+instead we can use:
+
+```
+//button[contains(text(), 'Submit')]
+```
+
+Meaning:
+
+Find a button whose text is `"Submit"`.
+
+This could match:
+
+```
+Submit       ✅
+Submit Form  ✅
+Submit Now   ✅
+```

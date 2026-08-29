@@ -17,7 +17,15 @@ public class Main {
 
         WebElement textInputWithMultipleAttribute = driver
                 .findElement(By.xpath("//input[@type='text' and @name='my-text']"));
-        System.out.println(textInputWithMultipleAttribute.getAttribute("name"));
+        // System.out.println(textInputWithMultipleAttribute.getAttribute("name"));
+
+        WebElement textInputWithContainsXPath = driver.findElement(By.xpath("//input[contains(@id, 'my-text-')]"));
+
+        // System.out.println(textInputWithContainsXPath.getAttribute("id"));
+
+        WebElement submitButtonWithContainsXPath = driver.findElement(By.xpath("//button[contains(text(), 'Sub')]"));
+
+        System.out.println(submitButtonWithContainsXPath.getText());
         driver.quit();
     }
 }
