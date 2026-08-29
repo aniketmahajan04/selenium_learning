@@ -263,3 +263,117 @@ we can use:
 ```
 
 `normalize-space()` removes leading/trailing whitespace and normalize whitespace inside the text.
+
+### XPath Relationship
+
+Suppose the DOM is:
+
+```html
+<div class="user">
+  <label>Username</label>
+  <input name="username" />
+</div>
+```
+
+If we locate the `input`, we can move **up to its parent** using:
+
+```text
+//input[@name='username']/parent::div
+```
+
+Read it as:
+Find the username input → move to its parent `div`.
+
+You can also use:
+
+```text
+//input[@name='username']/parent::*
+```
+
+Where `*` means any parent.
+
+<span style="color:red">NOTE:- It only travel up to parent you cannot travel to ancestor</span>
+
+### Child Relationship
+
+Starting with:
+
+```html
+<div class="field">
+  <label>Username</label>
+  <input name="username" />
+</div>
+```
+
+If we locate the `div`, we can not **down to its child elements**.
+
+For example:
+
+```text
+//div[@class='field']/child::input
+```
+
+means:
+
+Find the `div` with class `field`, then find its child `input`.
+
+### Following sibling
+
+Now consider:
+
+```html
+<div class="field">
+  <label>Username</label>
+  <input name="username" />
+</div>
+```
+
+The `label` and `input` are **siblings** because they have the same parent:
+
+```
+div.field
+├── label
+└── input
+```
+
+XPath can move from one sibling to another.
+
+For example:
+
+```
+//label[text()='username']/following-sibling::input
+```
+
+means:
+
+Find the `label` whose text is `username`, then move to its following sibling `input`:
+
+### Preceding siblings
+
+There is the opposite sibling direction:
+
+```
+//input[@name='password']/preding-sibling::label
+```
+
+This means:
+
+Find the password input, then move to the sibling that comes **before** it.
+
+Given:
+
+```html
+<div class="field">
+  <label>Password</label>
+  <input name="password" />
+</div>
+```
+
+the relationship is:
+
+```
+label  →  input
+  ↑         ↑
+preceding   following
+ sibling    sibling
+```

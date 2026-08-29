@@ -29,7 +29,11 @@ public class Main {
 
         WebElement textInputWithStartWithXPath = driver.findElement(By.xpath("//input[starts-with(@id, 'my-text')]"));
 
-        System.out.println(textInputWithStartWithXPath.getAttribute("id"));
+        // System.out.println(textInputWithStartWithXPath.getAttribute("id"));
+
+        WebElement textInputToParent = driver.findElement(By.xpath("//input[@id='my-text-id']/parent::label"));
+
+        System.out.println(textInputToParent.getTagName());
         driver.quit();
     }
 }
