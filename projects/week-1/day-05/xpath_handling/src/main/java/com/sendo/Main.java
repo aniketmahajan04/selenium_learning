@@ -1,5 +1,7 @@
 package com.sendo;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -32,8 +34,22 @@ public class Main {
         // System.out.println(textInputWithStartWithXPath.getAttribute("id"));
 
         WebElement textInputToParent = driver.findElement(By.xpath("//input[@id='my-text-id']/parent::label"));
-
         System.out.println(textInputToParent.getTagName());
+
+        WebElement labelToSelect = driver
+                .findElement(By.xpath("//label[starts-with(text(),'Dropdown')]/child::select"));
+        System.out.println(labelToSelect.getAttribute("name"));
+
+        WebElement followingToSiblingElement = driver
+                .findElement(By.xpath("//input[@name='my-datalist']/following-sibling::datalist"));
+
+        System.out.println(followingToSiblingElement.getAttribute("id"));
+
+        // could not able to find so i put this wrong imlementation
+        List<WebElement> followingToPrecedingSibling = driver
+                .findElements(By.xpath("//datalist[@id='my-options']/preceding-sibling::input"));
+
+        System.out.println(followingToPrecedingSibling.getFirst());
         driver.quit();
     }
 }
