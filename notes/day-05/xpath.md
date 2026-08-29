@@ -53,3 +53,59 @@ An absolute XPATH could describe the entire route:
 ```text
 /html/body/div/form/input
 ```
+
+It starts at the root:
+
+```text
+/
+↓
+html
+↓
+body
+↓
+div
+↓
+form
+↓
+input
+```
+
+A relative XPath can simply say:
+
+```
+//input[@id='my-text-id']
+```
+
+Meaning:
+
+Search through the document for an `input` whose ID is `username`.
+
+**Why does the curriculum specifically tell you to understand why relative XPath is generally preferred?**
+
+Because imagine the developer changes:
+
+```html
+<div>
+  <form></form>
+</div>
+```
+
+to:
+
+```text
+<section>
+    <div>
+        <form>
+```
+
+The absolute path:
+
+```text
+/html/body/div/form/input
+```
+
+may break because the DOM hierarchy changed.
+
+But:
+
+**That's why professional Selenium code generally avoids unnecessarily long absolute XPath expressions.**
