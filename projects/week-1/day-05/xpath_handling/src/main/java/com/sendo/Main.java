@@ -25,7 +25,11 @@ public class Main {
 
         WebElement submitButtonWithContainsXPath = driver.findElement(By.xpath("//button[contains(text(), 'Sub')]"));
 
-        System.out.println(submitButtonWithContainsXPath.getText());
+        // System.out.println(submitButtonWithContainsXPath.getText());
+
+        WebElement textInputWithStartWithXPath = driver.findElement(By.xpath("//input[starts-with(@id, 'my-text')]"));
+
+        System.out.println(textInputWithStartWithXPath.getAttribute("id"));
         driver.quit();
     }
 }

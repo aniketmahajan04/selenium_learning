@@ -196,3 +196,70 @@ Submit       ✅
 Submit Form  ✅
 Submit Now   ✅
 ```
+
+### XPath `starts-with()`
+
+It's similar to the CSS operator you learned yesterday:
+
+```text
+CSS:    [id^='user']
+XPath:  starts-with(@id, 'user')
+```
+
+Suppose:
+
+```html
+<input id="user-email-93821" />
+```
+
+You can write:
+
+```
+//input[starts-with(@id, 'user-email')]
+```
+
+Meaning:
+
+Find an `input` whose `id` **starts with** `user-email`.
+
+**Compare**
+
+CSS:
+
+```
+input[id^='user-email']
+```
+
+XPATH:
+
+```
+//input[starts-with(@id, 'user-email)]
+```
+
+Same general idea, different syntax.
+
+### XPath `normalize-space()`
+
+This is useful when the text has extra whitespace.
+
+Suppose the html is:
+
+```html
+<button>Submit</button>
+```
+
+The visible text may contains surrounding whitespace/newline.
+
+instead of:
+
+```text
+//button[text()='Submit']
+```
+
+we can use:
+
+```text
+//button[normalize-space()='Submit']
+```
+
+`normalize-space()` removes leading/trailing whitespace and normalize whitespace inside the text.
