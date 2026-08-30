@@ -33,6 +33,11 @@ public class Main {
             textInput.clear();
             textInput.sendKeys("Hello Aniket again");
             System.out.println(textInput.getAttribute("value"));
+            System.out.println(textInput.isDisplayed());
+            System.out.println(textInput.isEnabled());
+
+            WebElement checkBox = driver.findElement(By.id("my-radio-1"));
+            System.out.println(checkBox.isSelected());
         } finally {
             driver.quit();
         }

@@ -263,3 +263,75 @@ For the input:
 ```java
 textInput.getAttribute("value");
 ```
+
+### `isDisplayed()`, `isEnabled()`, `isSelected()`
+
+These three methods are about **element state**.
+
+Imagine:
+
+```html
+<input id="username" />
+<input id="disabled" disabled />
+<input type="checkbox" id="remember" />
+```
+
+Selenium lets you ask question about those elements.
+
+`isDisplayed()`:
+
+```java
+element.isDisplayed();
+```
+
+is this element currently displayed/visible?
+
+`isEnabled()`
+
+```java
+element.isEnabled();
+```
+
+Can this element currently be interacted with/enabled?
+
+For example, a disabled button:
+
+```html
+<button disabled>Submit</button>
+```
+
+would report:
+
+```java
+button.isEnabled();
+```
+
+`isSelectd()`
+
+```java
+element.isSelected();
+```
+
+Primarily useful for selectable elements such as:
+
+- checkbox
+- radio button
+- `<option>` elements
+
+For example:
+
+```html
+<input type="checkbox" id="remember" />
+```
+
+If it's checked:
+
+```java
+element.isSelected(); // true
+```
+
+If it's unchecked:
+
+```java
+element.isSelected(); // false
+```
