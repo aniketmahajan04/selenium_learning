@@ -2,8 +2,8 @@
 
 ## Current Status
 
-- Current Day: Day 4
-- Current Topic: CSS Selectors
+- Current Day: Day 5
+- Current Topic: XPath
 - Status: Completed
 
 ## Completed
@@ -107,43 +107,69 @@
 - Understanding that CSS selectors identify matching elements while `findElement()` returns the first matching element
 - Practical CSS selector construction using the Selenium Web Form page
 
+### Day 5 — XPath
+
+- Absolute XPath
+- Relative XPath
+- Why relative XPath is generally preferred over absolute XPath
+- Attribute XPath
+- Text XPath
+- XPath `contains()`
+- XPath `starts-with()`
+- XPath `normalize-space()`
+- XPath `and`
+- XPath `or`
+- XPath `parent::`
+- XPath `child::`
+- XPath `following-sibling::`
+- XPath `preceding-sibling::`
+- XPath navigation through DOM relationships
+- Using XPath with Selenium's `By.xpath()`
+- Constructing XPath expressions from real HTML
+- Understanding the difference between exact text matching and partial text matching
+- Understanding how dynamic attributes can be handled using XPath functions
+- Practical XPath construction using the Selenium Web Form page
+
 ## What I Understand
 
 - Selenium locators are strategies used to identify web elements in the DOM.
 - `driver.findElement()` returns one matching `WebElement`.
 - `driver.findElements()` returns a list of matching `WebElement` objects.
-- `By.id()` is generally preferred when the ID is unique and stable.
-- A locator being valid does not automatically make it a good locator.
-- A good locator should be sufficiently unique, stable, readable, and simple.
-- `By.tagName()` can be too broad when many elements share the same tag.
-- `By.className()` accepts one class name even when an element has multiple CSS classes.
-- CSS selectors can combine multiple conditions on the same element.
-- `By.linkText()` uses exact visible link text.
-- `By.partialLinkText()` can match part of a link's visible text.
-- XPath can locate elements using attributes and visible text.
-- XPath conditions can be combined using `and` and `or`.
+- A locator should ideally be unique, stable, readable, and simple.
 - Dynamic IDs can make locators fragile.
-- CSS and XPath can both locate the same element; the choice should depend on reliability, stability, readability, and simplicity.
+- CSS and XPath can both locate elements; the choice should depend on reliability, stability, readability, and simplicity.
 - A simple reliable locator is preferable to an unnecessarily complicated locator.
-- `#` represents an ID selector in CSS.
-- `.` represents a class selector in CSS.
-- A CSS space represents a descendant relationship.
-- `>` represents a direct-child relationship.
-- Multiple CSS attribute conditions without a space apply to the same element.
-- `^=` means an attribute value starts with a specified value.
-- `$=` means an attribute value ends with a specified value.
-- `*=` means an attribute value contains a specified value.
+- CSS `#` represents an ID selector.
+- CSS `.` represents a class selector.
+- CSS space represents a descendant relationship.
+- CSS `>` represents a direct-child relationship.
+- CSS `^=` means starts with.
+- CSS `$=` means ends with.
+- CSS `*=` means contains.
 - CSS selectors can combine tags, classes, attributes, and relationships.
-- A CSS selector itself can match multiple elements; `findElement()` returns the first matching element.
-- A more complicated locator is not automatically a better locator.
+- XPath can represent an entire DOM path using an absolute XPath.
+- Relative XPath searches for elements without depending on the complete DOM hierarchy.
+- Absolute XPath is more dependent on DOM structure and can therefore be more fragile.
+- XPath attribute conditions use `@attribute`.
+- XPath text can be matched with `text()`.
+- `contains()` checks whether the specified text occurs within a value.
+- `starts-with()` checks whether a value begins with the specified text.
+- `normalize-space()` handles surrounding whitespace and normalizes whitespace in text.
+- XPath conditions can be combined using `and` and `or`.
+- `parent::` moves from an element to its parent.
+- `child::` moves from an element to its child.
+- `following-sibling::` moves to a sibling that occurs after the current element.
+- `preceding-sibling::` moves to a sibling that occurs before the current element.
+- XPath can be used to navigate the DOM rather than only locating individual elements.
 
 ## Weak Areas
 
-- Advanced CSS selector syntax has not yet been covered beyond the Day 4 curriculum.
-- Advanced XPath functions and relationships have not yet been covered.
-- Locator strategies have been practiced, but large-scale locator design and maintainability will need reinforcement through later exercises.
+- Advanced XPath functions beyond the Day 5 curriculum have not yet been covered.
+- XPath locator design and maintainability will need reinforcement through later exercises.
 - Formal test assertions have not been learned yet and will be covered later with TestNG.
-- Day 4 practical exercise was completed under a time constraint, so some selectors were demonstrated in a shortened form rather than producing 15 fully documented examples.
+- The Day 5 practical exercise was completed under a time constraint, so fewer than 15 XPath expressions were documented.
+- One `normalize-space()` usage was initially written incorrectly and corrected through practice.
+- One XPath function was initially misspelled as `start-with()` instead of `starts-with()`.
 
 ## Exercises Completed
 
@@ -198,6 +224,25 @@
 - Built selectors using the actual Selenium Web Form page.
 - Verified CSS locator behavior with Selenium.
 
+### Day 5
+
+- Created an absolute XPath for an element on the Selenium Web Form.
+- Created relative XPath expressions using attributes.
+- Created XPath expressions using multiple attributes.
+- Practiced XPath `contains()` with attributes.
+- Practiced XPath `contains()` with text.
+- Practiced XPath `starts-with()`.
+- Debugged an `InvalidSelectorException` caused by misspelling `starts-with()` as `start-with()`.
+- Practiced `normalize-space()`.
+- Practiced XPath `and`.
+- Practiced XPath `or`.
+- Practiced `parent::`.
+- Practiced `child::`.
+- Practiced `following-sibling::`.
+- Practiced `preceding-sibling::`.
+- Built XPath expressions against the real Selenium Web Form page.
+- Completed the Day 5 practical exercise under a time constraint.
+
 ## Mistakes I Made
 
 - Initially thought `WebDriver` was an abstract class; corrected to understand that it is a Java interface.
@@ -212,6 +257,9 @@
 - Initially placed an XPath `or` condition inside the `text()` string; corrected to separate XPath conditions.
 - Initially wrote an incorrect CSS selector syntax for an attribute ending match and corrected it to `[name$='email']`.
 - Initially used `lable` instead of `label` in one CSS selector exercise; this was a spelling mistake rather than a misunderstanding of descendant selectors.
+- Initially wrote `start-with()` instead of the correct XPath function `starts-with()`.
+- Initially wrote `normalize-space()` with an extra argument; corrected to valid single-expression usage.
+- Learned that XPath is not inherently "slow"; the browser closing immediately was caused by `driver.quit()` being reached quickly after the operation completed.
 
 ## Current Project
 
@@ -226,8 +274,8 @@
 
 ## Next Lesson
 
-Day 5 — XPath
+Day 6 — WebDriver and WebElement
 
 ## Last Updated
 
-Day 4 completed.
+Day 5 completed.
