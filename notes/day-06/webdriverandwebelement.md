@@ -181,3 +181,85 @@ Write code that:
 **4.** Prints the **current URL** after submission.
 
 ### sendKeys()
+
+Let's understand how to interact with inputs fields.
+
+Take this input field as example:
+
+```html
+<input id="my-text-id" name="my-text" type="text" />
+```
+
+You can type into it with:
+
+```java
+WebElement textInput = driver.findElement(By.id("my-text-id"));
+textInput.sendKeys("Hello Selenium");
+```
+
+**Your turn**
+
+Using the Selenium Web Form:
+
+**1.** Find the text input using `By.id("my-text-id")`.
+**2.** Type:
+
+```
+Hello Selenium
+```
+
+**3.** Then retrieve its value using getAttribute("value").
+**4.** Print it.
+
+Don't just assume getText() will give you the typed value—**reason about which attribute actually stores the input's value**.
+
+### `clear()`
+
+Now let's say the field already contains:
+
+```text
+Hello Aniket
+```
+
+and you want to replace it with:
+
+```text
+Selenium
+```
+
+You could do:
+
+```java
+textInput.clear();
+textInput.sendKeys();
+```
+
+### `getText()` vs `getAttribute()`
+
+This distinction is very important in real automation.
+
+Consider:
+
+```html
+<input id="username" value="Sendo" />
+```
+
+and:
+
+```html
+<button>Login</button>
+```
+
+For the button:
+
+```java
+button.getText();
+```
+
+makes sense because `Login` is **text inside the element**.
+
+For the input:
+
+```java
+textInput.getAttribute("value");
+```

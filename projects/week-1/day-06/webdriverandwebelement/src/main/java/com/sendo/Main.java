@@ -21,10 +21,18 @@ public class Main {
             // driver.navigate().refresh();
 
             WebElement button = driver.findElement(By.cssSelector("button[type='submit']"));
-            button.click();
+            // button.click();
 
-            System.out.println(driver.getCurrentUrl());
-            System.out.println(driver.getTitle());
+            // System.out.println(driver.getCurrentUrl());
+            // System.out.println(driver.getTitle());
+
+            WebElement textInput = driver.findElement(By.id("my-text-id"));
+            // textInput.click();
+            textInput.sendKeys("Hello Aniket");
+            System.out.println(textInput.getAttribute("value"));
+            textInput.clear();
+            textInput.sendKeys("Hello Aniket again");
+            System.out.println(textInput.getAttribute("value"));
         } finally {
             driver.quit();
         }
