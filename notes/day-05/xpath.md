@@ -222,6 +222,8 @@ Meaning:
 
 Find an `input` whose `id` **starts with** `user-email`.
 
+<span style="color:red">NOTE:- It cannot work with text() function</span>
+
 **Compare**
 
 CSS:
