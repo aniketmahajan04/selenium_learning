@@ -2,9 +2,12 @@
 
 ## Current Status
 
-- Current Day: Day 6
-- Current Topic: WebDriver and WebElement
+- Current Day: Day 7
+- Current Topic: Week 1 Project — Search Automation
 - Status: Completed
+- Week 1 Status: Completed
+
+---
 
 ## Completed
 
@@ -20,19 +23,18 @@
 - Maven `pom.xml` structure and project coordinates
 - Maven dependencies and dependency resolution
 - Added Selenium Java dependency
-- Launched Chrome with Selenium 4
-- Basic Selenium Manager awareness
-- `driver.get()` for browser navigation
-- `driver.getTitle()` for retrieving the page title
-- `driver.getCurrentUrl()` for retrieving the current URL
+- Launched Chrome using Selenium 4
+- Selenium Manager awareness
+- `driver.get()`
+- `driver.getTitle()`
+- `driver.getCurrentUrl()`
 - `driver.close()` vs `driver.quit()`
 - Basic Selenium/WebDriver architecture
 - Browser ↔ WebDriver communication concept
-- W3C WebDriver standard concept
+- W3C WebDriver concept
 - Selenium 4 overview
-- Selenium vs Playwright/Cypress at a high level
+- Selenium vs Playwright vs Cypress at a high level
 - What Selenium can and cannot automate
-- First Selenium practical exercise
 - Basic title verification using Java `if/else`
 
 ### Day 2 — HTML, DOM and Web Elements
@@ -51,12 +53,14 @@
 - Sibling relationships
 - Inspecting elements using Chrome DevTools
 - Inspecting real elements on the Selenium Web Form
-- Identifying text fields, buttons, links, and forms
-- Reasoning about parent, child, and sibling relationships
+- Identifying text fields
+- Identifying buttons
+- Identifying links
+- Identifying forms
+- Reasoning about DOM relationships
 
 ### Day 3 — Selenium Locators
 
-- What Selenium locators are
 - `By.id()`
 - `By.name()`
 - `By.className()`
@@ -67,57 +71,51 @@
 - `By.xpath()`
 - `driver.findElement()`
 - `driver.findElements()`
-- Unique vs broad locators
+- Unique locators
+- Broad locators
 - Locator reliability
 - Fragile locators
 - Dynamic attributes
-- Why `id` is usually preferred when unique and stable
-- Choosing simple locators over unnecessarily complicated locators
+- Why stable IDs are generally preferred
+- Choosing simple locators
 - CSS vs XPath reasoning
-- Practical locator exercises using the Selenium Web Form
+- Practical locator exercises
 
 ### Day 4 — CSS Selectors
 
-- CSS selector fundamentals
 - ID selectors using `#`
 - Class selectors using `.`
 - Attribute selectors
-- Attribute presence selectors
-- Exact attribute-value matching
+- Exact attribute matching
 - Multiple attribute selectors
-- Descendant selectors using a space
-- Child selectors using `>`
+- Descendant selectors
+- Child selectors
 - Difference between descendants and direct children
 - Combining tag, class, and attribute selectors
-- `^=` starts-with attribute matching
-- `$=` ends-with attribute matching
-- `*=` contains attribute matching
-- Choosing simple selectors when a reliable ID exists
-- Using CSS selectors with Selenium's `By.cssSelector()`
-- Practical CSS selector construction using the Selenium Web Form
+- `^=` starts-with matching
+- `$=` ends-with matching
+- `*=` contains matching
+- Practical CSS selector construction
 
 ### Day 5 — XPath
 
 - Absolute XPath
 - Relative XPath
-- Why relative XPath is generally preferred over absolute XPath
 - Attribute XPath
 - Text XPath
-- XPath `contains()`
-- XPath `starts-with()`
-- XPath `normalize-space()`
-- XPath `and`
-- XPath `or`
-- XPath `parent::`
-- XPath `child::`
-- XPath `following-sibling::`
-- XPath `preceding-sibling::`
-- XPath navigation through DOM relationships
-- Using XPath with Selenium's `By.xpath()`
-- Constructing XPath expressions from real HTML
+- `contains()`
+- `starts-with()`
+- `normalize-space()`
+- `and`
+- `or`
+- `parent::`
+- `child::`
+- `following-sibling::`
+- `preceding-sibling::`
+- XPath DOM navigation
 - Exact vs partial text matching
-- Handling dynamic attributes with XPath functions
-- Practical XPath construction using the Selenium Web Form
+- Dynamic attribute handling
+- Practical XPath construction
 
 ### Day 6 — WebDriver and WebElement
 
@@ -133,8 +131,8 @@
 - `driver.close()`
 - `driver.quit()`
 - Browser session concept
-- Difference between closing a window and ending the WebDriver session
-- Difference between `get()` and `navigate().to()`
+- `close()` vs `quit()`
+- `get()` vs `navigate().to()`
 
 #### WebElement
 
@@ -147,132 +145,258 @@
 - `isEnabled()`
 - `isSelected()`
 - Element references
-- Finding an element and interacting with the resulting `WebElement`
-- Difference between element text and input `value`
-- Checking element state before interaction
+- Finding and interacting with elements
+- Input `value` vs visible text
+- Element state inspection
+
+### Day 7 — Week 1 Search Automation Project
+
+- Designed a search automation workflow
+- Selected a search website
+- Inspected a real search field
+- Identified that the DuckDuckGo search field is a `textarea`
+- Located the search field using XPath and its placeholder
+- Used `sendKeys()` to enter a search term
+- Used `Keys.ENTER` to submit the search
+- Retrieved the resulting page title
+- Retrieved the resulting URL
+- Verified the title using `contains()`
+- Verified the search query in the URL using `contains()`
+- Combined multiple verification conditions using Java `&&`
+- Used `try/finally` for WebDriver cleanup
+- Used `driver.quit()` to close the browser session
+- Completed the Week 1 Search Automation project
+- Completed the Week 1 assessment
+
+---
+
+## Day 7 Project
+
+### Project: Search Automation
+
+### Workflow
+
+```text
+Open search website
+        ↓
+Locate search box
+        ↓
+Enter search term
+        ↓
+Press ENTER
+        ↓
+Search is submitted
+        ↓
+Get title + URL
+        ↓
+Verify expected result
+        ↓
+Quit browser
+```
+
+### Search Used
+
+```text
+Selenium WebDriver
+```
+
+### Verification Strategy
+
+Title verification:
+
+```java
+title.contains("Selenium WebDriver")
+```
+
+URL verification:
+
+```java
+currentUrl.contains("q=Selenium+WebDriver")
+```
+
+Combined verification:
+
+```java
+if (currentUrl.contains("q=Selenium+WebDriver")
+        && title.contains("Selenium WebDriver")) {
+    System.out.println("Search test successful");
+}
+```
+
+---
 
 ## What I Understand
 
-- `WebDriver` controls the browser and browser session.
-- `WebElement` represents an element found on the page and provides methods for interacting with and inspecting it.
-- `driver.findElement()` locates an element and returns a `WebElement`.
-- `driver.findElements()` returns multiple matching elements.
-- `driver.get()` navigates the browser to a URL.
-- `driver.navigate()` provides navigation operations such as `to()`, `back()`, `forward()`, and `refresh()`.
-- `driver.close()` closes the current browser window.
-- `driver.quit()` ends the WebDriver session and closes its associated windows.
-- `click()` performs a click on an element.
-- `sendKeys()` sends keyboard input to an element.
-- `clear()` removes existing text from an editable input/textarea.
-- `getText()` retrieves visible text from an element.
-- `getAttribute()` retrieves the value of a specified attribute.
-- For an input's entered value, `getAttribute("value")` is appropriate.
-- `isDisplayed()` checks whether an element is displayed.
+- Selenium automation should contain both **actions and verification**.
+- Successfully executing Selenium commands does not automatically mean a test passed.
+- A test should verify observable expected behavior.
+- A stable portion of a dynamic URL can be used for verification.
+- `contains()` is useful when part of a value is stable and another part is dynamic.
+- `equals()` compares Java `String` contents.
+- `==` compares Java object references.
+- `findElement()` locates an element and returns one `WebElement`.
+- `findElements()` returns multiple matching elements.
+- A broad locator such as `By.tagName("input")` can select the wrong element when multiple inputs exist.
+- A specific locator such as `By.name("username")` is preferable when it uniquely identifies the intended element.
+- `WebDriver` controls the browser/session.
+- `WebElement` represents a page element and provides interaction/state methods.
+- `ChromeDriver` implements the `WebDriver` interface.
+- `findElement()` belongs to WebDriver and returns a WebElement.
+- `click()` interacts with an element.
+- `sendKeys()` sends keyboard input.
+- `Keys.ENTER` can be used to submit a search through a focused search field.
+- `getText()` retrieves visible element text.
+- `getAttribute("value")` retrieves an input's value.
+- `isDisplayed()` checks visibility.
 - `isEnabled()` checks whether an element is enabled.
-- `isSelected()` checks whether a selectable element such as a checkbox or radio button is selected.
-- A `click()` is not necessarily required before `sendKeys()`; Selenium can generally send keys directly to an appropriate input element.
-- An element can be located first and then interacted with through its `WebElement` reference.
-- Browser navigation and element interaction are separate responsibilities of WebDriver and WebElement.
+- `isSelected()` checks whether a selectable element is selected.
+- `driver.get()` navigates to a URL.
+- `driver.navigate()` provides additional browser navigation operations.
+- `driver.close()` closes the current window.
+- `driver.quit()` ends the WebDriver session.
+- Stable, specific, readable locators are preferred over unnecessarily complicated locators.
+
+---
 
 ## Professional Practices Learned
 
-- Use reliable and stable locators rather than unnecessarily complicated locators.
-- Don't automatically assume CSS is better than XPath or vice versa; choose based on stability, uniqueness, readability, and simplicity.
-- Don't add unnecessary `click()` calls before every `sendKeys()`.
-- Use `getAttribute("value")` for input values instead of relying on `getText()`.
-- Check element state when appropriate before interacting with it.
-- Use `try/finally` to ensure `driver.quit()` executes even when an exception occurs.
-- Keep browser cleanup in a reliable location so WebDriver sessions are not left running.
+- Inspect the DOM before choosing a locator.
+- Don't automatically choose XPath or CSS based on personal preference.
+- Choose locators based on stability, uniqueness, readability, and simplicity.
+- Avoid overly broad locators.
+- Avoid fragile absolute XPath when a stable relative locator is available.
+- Don't add unnecessary `click()` calls before `sendKeys()`.
+- Separate **locating**, **interacting**, and **verifying** in your mental model.
+- Verify the expected application behavior rather than merely checking that Selenium executed without an exception.
+- Store values such as title and URL in variables when it improves readability.
+- Use `try/finally` to ensure browser cleanup.
+- Don't attempt to bypass anti-automation verification mechanisms.
+- When a real website interferes with automation, use an automation-friendly test website when appropriate.
 
-## Exercises Completed
+---
 
-### Day 1
+## Week 1 Assessment
 
-- Created a Maven Selenium project using Java 21.
-- Added Selenium as a Maven dependency.
-- Launched Chrome using `ChromeDriver`.
-- Navigated to a website.
-- Printed the page title.
-- Printed the current URL.
-- Quit the browser.
-- Added basic title verification using Java `if/else`.
+### Selenium Architecture
 
-### Day 2
+**Result: Passed**
 
-- Inspected HTML elements using Chrome DevTools.
-- Identified element attributes.
-- Identified parent, child, and sibling relationships.
-- Inspected the Selenium Web Form.
-- Identified text fields, buttons, links, and forms.
+Demonstrated understanding of:
 
-### Day 3
+- `WebDriver` interface
+- `ChromeDriver` implementation
+- `WebDriver.findElement()`
+- `WebElement` interface
+- Relationship between WebDriver and WebElement
 
-- Practiced all major Selenium locator strategies.
-- Practiced `findElement()` and `findElements()`.
-- Practiced CSS selectors and XPath.
-- Practiced locator reliability and fragile locator reasoning.
-- Completed the locator practical exercise using the Selenium Web Form.
+### Locators
 
-### Day 4
+**Result: Passed**
 
-- Practiced ID CSS selectors.
-- Practiced class CSS selectors.
-- Practiced attribute selectors.
-- Practiced multiple attributes.
-- Practiced descendant and child selectors.
-- Practiced `^=`, `$=`, and `*=`.
-- Practiced combining selectors.
-- Built and tested CSS selectors against the Selenium Web Form.
+Demonstrated ability to:
 
-### Day 5
+- Choose stable locators
+- Avoid overly broad locators
+- Prefer a unique stable ID when available
+- Use `name` when it uniquely identifies an element
+- Reason about CSS vs XPath
+- Identify problems with dynamic and structural locators
 
-- Practiced absolute and relative XPath.
-- Practiced attribute and text XPath.
-- Practiced `contains()`.
-- Practiced `starts-with()`.
-- Practiced `normalize-space()`.
-- Practiced `and` and `or`.
-- Practiced parent, child, following-sibling, and preceding-sibling axes.
-- Built and tested XPath expressions against the Selenium Web Form.
+### XPath
 
-### Day 6
+**Result: Passed**
 
-- Practiced browser navigation using `get()` and `navigate()`.
-- Practiced `back()`, `forward()`, and `refresh()`.
-- Practiced `click()`.
-- Submitted the Selenium Web Form using Selenium.
-- Retrieved the resulting URL and page information.
-- Practiced `sendKeys()`.
-- Practiced `clear()`.
-- Retrieved input values using `getAttribute("value")`.
-- Practiced `getText()` vs `getAttribute("value")`.
-- Practiced `isDisplayed()`.
-- Practiced `isEnabled()`.
-- Practiced `isSelected()` with a radio button.
-- Built a complete WebDriver/WebElement interaction workflow.
-- Used `try/finally` with `driver.quit()` for browser cleanup.
-- Passed the Day 6 knowledge check.
+Demonstrated understanding of:
 
-## Mistakes I Made
+- Relative XPath
+- Attribute XPath
+- Text XPath
+- XPath functions
+- XPath logical operators
+- XPath axes
+- DOM navigation
+
+### CSS
+
+**Result: Passed**
+
+Demonstrated understanding of:
+
+- IDs
+- Classes
+- Attributes
+- Descendants
+- Children
+- Attribute operators
+- Combined selectors
+
+### WebDriver Navigation
+
+**Result: Passed**
+
+Demonstrated understanding of:
+
+- `get()`
+- `navigate().to()`
+- `back()`
+- `forward()`
+- `refresh()`
+- `close()`
+- `quit()`
+
+### WebElement Interaction
+
+**Result: Passed**
+
+Demonstrated understanding of:
+
+- `click()`
+- `sendKeys()`
+- `clear()`
+- `getText()`
+- `getAttribute()`
+- `isDisplayed()`
+- `isEnabled()`
+- `isSelected()`
+
+### Test Design
+
+**Result: Passed**
+
+Demonstrated understanding that:
+
+```text
+Action ≠ Verification
+```
+
+and that a useful automation test should verify expected behavior.
+
+---
+
+## Mistakes and Lessons
 
 - Initially thought `WebDriver` was an abstract class; corrected to understand that it is a Java interface.
 - Initially described `driver` as an instance variable; corrected to understand that it is a reference variable.
-- Initially thought `driver.get()` was needed before Chrome could open; corrected to understand that `new ChromeDriver()` starts the browser session and `get()` performs navigation.
-- Needed clarification that the Java `WebDriver` interface and the W3C WebDriver protocol are related but distinct concepts.
-- Initially described Selenium Manager as a command-line tool; corrected to understand its role in browser-driver management.
-- Initially considered a dynamic ID acceptable until understanding that changing IDs make locators fragile.
-- Initially ranked XPath as stronger than CSS mainly because XPath can be made more specific; corrected to understand that locator quality depends on stability, uniqueness, readability, and simplicity.
-- Initially used complete link text with `partialLinkText()`, then understood the purpose of partial matching.
-- Initially wrote an XPath `and` condition without the `@` before the attribute name; corrected it.
-- Initially placed an XPath `or` condition incorrectly inside the `text()` expression; corrected it.
-- Initially wrote incorrect CSS selector syntax for an ending attribute match and corrected it.
-- Initially used `lable` instead of `label`; identified this as a spelling error.
+- Initially thought `driver.get()` was needed before Chrome could open; corrected to understand that `new ChromeDriver()` starts the browser session.
+- Initially described Selenium Manager as a command-line tool; corrected its role in driver management.
+- Initially considered dynamic IDs acceptable; learned why they create fragile locators.
+- Initially ranked XPath as inherently stronger than CSS; learned that locator quality depends on stability, uniqueness, readability, and simplicity.
+- Initially used complete link text with `partialLinkText()`; learned the distinction between exact and partial matching.
+- Initially wrote incorrect XPath `and`/`or` syntax; corrected it.
+- Initially wrote incorrect CSS attribute-selector syntax; corrected it.
+- Initially wrote `lable` instead of `label`; identified it as a spelling mistake.
 - Initially wrote `start-with()` instead of `starts-with()`.
-- Initially wrote `normalize-space()` with an incorrect extra argument.
-- Learned that XPath is not inherently slow; the browser closing quickly was caused by `driver.quit()` being reached quickly.
-- Initially thought `click()` was needed before `sendKeys()` to give an input focus; learned that Selenium can generally send keys directly to the element.
-- Initially omitted printing the second input value in the Day 6 practical exercise and corrected it.
-- Initially omitted the `isEnabled()` check in the Day 6 practical exercise and corrected it.
+- Initially used `normalize-space()` incorrectly with multiple arguments.
+- Learned that XPath is not inherently slow; browser behavior was affected by when `driver.quit()` executed.
+- Initially thought `click()` was required before every `sendKeys()` call; learned that Selenium can generally send keys directly to the appropriate element.
+- Initially used Google for the search project and encountered Google's anti-automation verification page.
+- Learned to distinguish between Selenium code failure and application/website behavior.
+- Initially used a weak verification based only on `isBlank()`; improved it to verify the expected title and query URL.
+- Learned that `==` should not be used for Java String content comparison.
+- Learned that URL verification should focus on stable expected portions when parameters are dynamic.
+- Learned that broad locators can return unintended elements when multiple elements match.
+
+---
 
 ## Current Project
 
@@ -283,63 +407,133 @@
 - IDE: IntelliJ IDEA
 - Browser: Chrome/Chromium
 - Main practice class: `com.sendo.Main`
-- Main practice website: Selenium Web Form
+- Practice website: Selenium Web Form
+- Search project website: DuckDuckGo
+
+---
 
 ## Current Skill Level
 
 ### Strong Foundations
 
-- Selenium architecture basics
-- WebDriver fundamentals
-- WebElement fundamentals
+- Selenium architecture
+- WebDriver
+- WebElement
 - HTML/DOM basics
 - Selenium locator strategies
 - CSS selectors
 - XPath
-- Basic browser navigation
-- Basic element interaction
-- Basic element state inspection
+- Browser navigation
+- Element interaction
+- Element state inspection
+- Basic test verification
+- Basic test design
 
-### Still To Learn
+### Week 1 Completed
+
+```text
+Day 1  ✅ Selenium Fundamentals
+Day 2  ✅ HTML, DOM & Web Elements
+Day 3  ✅ Selenium Locators
+Day 4  ✅ CSS Selectors
+Day 5  ✅ XPath
+Day 6  ✅ WebDriver & WebElement
+Day 7  ✅ Search Automation Project
+```
+
+---
+
+## Still To Learn
+
+### Week 2 — Real-World Selenium
 
 - Synchronization and waits
-- Implicit vs explicit waits
+- Static waits
+- Implicit waits
+- Explicit waits
+- Fluent waits
 - `WebDriverWait`
 - Expected Conditions
+- Race conditions
+- Element availability
+- Reusable wait utilities
 - Dropdowns
+- Native HTML `<select>`
+- Selenium `Select`
+- Custom dropdowns
 - Alerts
+- Confirmation dialogs
+- Prompt dialogs
 - Frames/iFrames
+- Nested frames
 - Windows and tabs
+- Window handles
 - Actions API
+- Hover
+- Right click
+- Double click
+- Drag and drop
+- Keyboard actions
 - Screenshots
+- Screenshots on test failure
+- Week 2 Login + Product Search project
+
+### Week 3 — Test Automation
+
 - TestNG
+- Test lifecycle annotations
 - Assertions
 - Data-driven testing
+- `@DataProvider`
+- External test data
 - Page Object Model
-- Maven test execution
+- Advanced Page Object Model
+- Maven
+- Test execution
+- Mini framework
+
+### Week 4 — Professional Framework
+
 - Framework architecture
+- Driver factory
 - Configuration
-- Logging and reporting
+- Browser options
+- Headless execution
+- Logging
+- Reporting
 - Selenium Grid
-- Parallel testing
+- Parallel execution
 - CI/CD
-- Final Selenium automation framework
+- Jenkins
+- Final Selenium framework
+
+---
 
 ## Next Lesson
 
-Day 7 — Week 1 Project: Search Automation
+### Day 8 — Synchronization and Waits
 
-### Day 7 Project Goals
+Focus:
 
-1. Open a search engine or test website.
-2. Find the search input.
-3. Enter a search term.
-4. Submit the search.
-5. Verify the page title.
-6. Verify the URL or search results.
-7. Close the browser.
-8. Refactor the code to make it cleaner.
+- Why synchronization is necessary
+- Static waits
+- Implicit waits
+- Explicit waits
+- Fluent waits
+- `WebDriverWait`
+- Expected Conditions
+- Element availability
+- Race conditions
+- Why blindly using `Thread.sleep()` is bad practice
+
+The main focus will be:
+
+```java
+WebDriverWait
+```
+
+---
 
 ## Last Updated
 
-Day 6 completed.
+Day 7 completed — Week 1 completed.
