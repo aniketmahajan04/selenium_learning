@@ -335,3 +335,20 @@ If it's unchecked:
 ```java
 element.isSelected(); // false
 ```
+
+**Final Day 6 exercise**
+
+Let's combine what you've learned.
+
+Automate this workflow on the Selenium Web Form:
+
+**1.** Locate the text input.
+**2.** Enter "Selenium Day 6".
+**3.** Print its value.
+**4.** Clear it.
+**5.** Enter "WebDriver".
+**6.** Print its value again.
+**7.** Locate the Submit button.
+**8.** Check whether it's displayed and enabled.
+**9.** Click it.
+**10.** Print the resulting URL.
