@@ -156,3 +156,115 @@ driver.findElement(By.id("username"));
 ```
 
 can fail immediately with the element isn't available.
+
+With a 10-second implicit wait, WebDriver will keep attempting to find the elements for **up to 10 seconds** before giving up.
+
+### Explicit Waits
+
+**What is an explicit wait?**
+
+An explicit wait tells Selenium:
+
+##### Wait for a specific condition to become true, for up to a maximum amout of time
+
+For example:
+
+```java
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+WebElement button = wait.until(
+    ExpectedConditions.visibilityOfElementLocated(By.id("login"))
+);
+```
+
+There are Three important pieces:
+
+```text
+WebDriverWait
+      ↓
+maximum timeout
+      ↓
+until(...)
+      ↓
+specific condition
+```
+
+Unlike `Thread.sleep()` you're not saying:
+
+"Wait for 10 seconds"
+
+We're saying:
+
+"Wait up to 10 seconds for this condition. If it becomes true earlier, continue immediately."
+
+Why `until()`?
+
+This:
+
+```java
+wait.until(...);
+```
+
+keep checking the condition until earlier:
+
+**Condition succeeds**:
+
+```text
+0s → ❌
+1s → ❌
+2s → ❌
+3s → ✅
+        ↓
+     continue
+```
+
+or the timeout is reached:
+
+```text
+0s → ❌
+1s → ❌
+...
+10s → ❌
+        ↓
+TimeoutException
+```
+
+That's the fundamental idea.
+
+### Expected Conditions
+
+This is an important piece:
+
+You can think of:
+
+```java
+ExpectedConditions.visibilityOfElementLocated(...)
+```
+
+as a question **Selenium repeatedly asks the browser**:
+
+"Is this element located and visible yet?"
+
+For example:
+
+```java
+wait.until(
+    ExpectedConditions.visibilityOfElementLocated(By.id("revealed"))
+);
+```
+
+Conceptually:
+
+```text
+Is #revealed visible?
+       ↓
+      No → keep polling
+       ↓
+Is #revealed visible?
+       ↓
+      No → keep polling
+       ↓
+Is #revealed visible?
+       ↓
+     YES → return WebElement
+```
