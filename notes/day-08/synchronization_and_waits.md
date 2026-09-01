@@ -268,3 +268,66 @@ Is #revealed visible?
        ↓
      YES → return WebElement
 ```
+
+And `WebDriverWait` handles the timeout/polling behavior for you.
+
+**Common conditions you'll encounter**
+
+```java
+visibilityOfElementLocated(...)
+presenceOfElementLocated(...)
+elementToBeClickable(...)
+textToBePresentInElement(...)
+urlContains(...)
+titleContains(...)
+```
+
+### Presence vs Visibility
+
+let's test that distinction:
+
+imagine this HTML:
+
+```html
+<div id="message" style="display:none;">Login successful</div>
+```
+
+The element **exists in the DOM**, but it isn't visible.
+
+Suppose you write:
+
+```java
+WebElement message = wait.until(
+    ExpectedConditions.presenceOfElementLocated(By.id("message"))
+);
+```
+
+The condition can succeed because the element is present, even though it's hidden.
+
+But:
+
+```java
+WebElement message = wait.until(
+    ExpectedConditions.visibilityOfElementLocated(By.id("message"))
+);
+```
+
+will continue waiting until it becomes visible.
+
+**Your turn**
+
+Imagine your next line is:
+
+message.getText();
+
+and your test requirement is:
+
+"Read the success message **only after the user can actually see it**."
+
+Which condition should you use?
+
+A. `presenceOfElementLocated()`
+
+B. `visibilityOfElementLocated()`
+
+And tell me **why presence alone isn't enough**.
