@@ -331,3 +331,129 @@ A. `presenceOfElementLocated()`
 B. `visibilityOfElementLocated()`
 
 And tell me **why presence alone isn't enough**.
+
+### Fluent Wait
+
+We won't go deeply into implementation yet.
+
+A Fluent wait gives you more control over things like:
+
+- maximum timeout
+- how frequently Selenium polls
+- which exception should be ignored while waiting
+
+```text
+Wait up to 10 seconds
+       ↓
+Check every 500 ms
+       ↓
+Ignore certain temporary exceptions
+       ↓
+Condition becomes true → continue
+```
+
+So you can think of the progression as:
+
+```text
+Thread.sleep()
+    ↓
+Fixed time — no condition
+
+Implicit Wait
+    ↓
+Wait while locating elements
+
+Explicit Wait
+    ↓
+Wait for a specific condition
+
+Fluent Wait
+    ↓
+Explicit waiting + more polling/exception control
+```
+
+Implementation:
+
+```java
+Wait<WebDriverWait> wait = new FluentWait<>(driver)
+        .withTimeout(Duration.ofSeconds(10))
+        .pollingEvery(Duration.ofSeconds(500))
+        .ignoring(NoSuchElementation.class);
+```
+
+Notice something important:
+
+```text
+withTimeout(10s)
+       ↓
+maximum time we're willing to wait
+
+pollingEvery(500ms)
+       ↓
+how frequently we check
+
+ignoring(...)
+       ↓
+which temporary exceptions to ignore
+```
+
+That's what makes Fluent Wait more configurable than the basic `WebDriverWait` usage we've just practiced.
+
+**Your exercise**
+
+Take your **Selenium dynamic page** code from earlier.
+
+Replace:
+
+```java
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+```
+
+with a `FluentWait` configured to:
+
+- timeout: **10 seconds**
+- polling: **500 milliseconds**
+- ignore: `NoSuchElementException`
+
+Then use it to wait for:
+
+```text
+id = revealed
+```
+
+to become visible.
+
+### Race Conditions
+
+A **Race condition** in Selenium happens when your test and the web application are progressing independently, and the test reaches and element **before the application has reached has reached the state required by the test.**
+
+For example:
+
+```text
+Application:
+Page → creates button → makes button visible → enables button
+                                      ↑
+Selenium:                             tries to click
+```
+
+If Selenium gets there too early, the test can fail.
+
+Without sychronization.
+
+```java
+WebElement button = driver.findElement(By.id("login"));
+```
+
+With synchronization:
+
+```java
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+WebElement button = wait.until(
+       ExpectedContions.elementToBeClickable(By.id("login"));
+);
+
+button.click();
+```
+
+Now Selenium waits for the **condition required by the operation**.
