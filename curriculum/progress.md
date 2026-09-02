@@ -3,7 +3,7 @@
 ## Current Status
 
 - Current Day: Day 7
-- Current Topic: Week 1 Project — Search Automation
+- Current Topic: Project
 - Status: Completed
 - Week 1 Status: Completed
 
@@ -395,6 +395,12 @@ and that a useful automation test should verify expected behavior.
 - Learned that `==` should not be used for Java String content comparison.
 - Learned that URL verification should focus on stable expected portions when parameters are dynamic.
 - Learned that broad locators can return unintended elements when multiple elements match.
+- Initially thought `findElement()` automatically waits for an element.
+- Learned that the default implicit wait is zero.
+- Initially used `Duration.ofSeconds(500)` when intending a 500 ms polling interval.
+- Corrected it to `Duration.ofMillis(500)`.
+- Initially checked `isDisplayed()` after `visibilityOfElementLocated()`; learned that this check is redundant.
+- Learned to distinguish DOM presence, visibility, and clickability.
 
 ---
 
@@ -509,11 +515,30 @@ Day 7  ✅ Search Automation Project
 
 ---
 
+## Completed
+
+### Day 8 — Synchronization and Waits
+
+- Why synchronization is necessary in Selenium
+- Race conditions
+- Static waits
+- Thread.sleep() and why blindly using it is a bad practice
+- Implicit waits
+- Explicit waits
+- WebDriverWait
+- Expected Conditions
+- Element availability
+- Fluent waits
+- Polling intervals
+- Ignoring exceptions with FluentWait
+- Difference between presence, visibility, and clickability
+- Dynamic elements and asynchronous page behavior
+
 ## Next Lesson
 
 ### Day 8 — Synchronization and Waits
 
-Focus:
+###
 
 - Why synchronization is necessary
 - Static waits
