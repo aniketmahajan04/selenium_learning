@@ -357,3 +357,55 @@ is visible.
 Would you use **one wait condition or two separate wait conditions?**
 
 And what conditions would you choose for each?
+
+### Element Selection
+
+Now we're going to look at one of the less obvious Expected Conditions from today's syllabus:
+
+**waiting for an element to be selected**.
+
+Imagine a checkbox:
+
+```html
+<input id="terms" type="checkbox" />
+```
+
+Your automation performs:
+
+```java
+driver.findElement(By.id("terms")).click();
+```
+
+But suppose the application uses JavaScript and the checkbox's selected state doesn't update immediately.
+
+You could need to synchronize with:
+
+> "Wait until this checkbox is actually selected."
+
+Selenium provides:
+
+```java
+ExpectedConditions.elementToBeSelected(...);
+```
+
+For example:
+
+```java
+wait.until(
+    ExpectedConditions.elementToBeSelected(
+        By.id("terms")
+    )
+);
+```
+
+The important distinction is:
+
+```text
+visibility → Is it visible?
+clickability → Can I click it?
+selection → Is it selected?
+```
+
+Again, we're matching the wait condition to the **state we actually care about**.
+
+Your challenge:
