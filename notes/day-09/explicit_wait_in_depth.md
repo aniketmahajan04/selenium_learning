@@ -130,3 +130,89 @@ ExpectedConditions.elementToBeClickable(...)
 ```
 
 That's why **the condition should match what your next action requires**.
+
+### `elementToBeClickable()`
+
+Let's go one level deeper.
+
+Suppose we have:
+
+```html
+<button id="submit" disabled>Submit</button>
+```
+
+After some javascript processing, the application changes it to:
+
+```html
+<button id="submit">Submit</button>
+```
+
+Your test want to do:
+
+```java
+driver.findElement(By.id("submit")).click();
+```
+
+A naive approach would be:
+
+```java
+Thread.sleep(3000)
+driver.findElement(By.id("submit"));
+```
+
+But you've already learned why that's poor synchronization.
+
+Instead;
+
+```java
+WebDriverWait driver = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+WebElement submitButton = wait.until(
+    ExpectedConditions.elementToBeClickable(By.id("submit"))
+);
+
+submitButton.click();
+```
+
+The important mental model is:
+
+```
+Application state
+      ↓
+Is the element ready for the intended click?
+      ↓
+YES → Selenium continues
+NO  → keep waiting
+```
+
+Notice something important: **we don't need to add another `isEnabled()` check after this wait just to prove the same thing**..
+
+**Your turn — choose the condition**
+
+Imagine this scenario:
+
+A product page has an **"Add to Cart"** button.
+
+The button is present in the DOM immediately and visible, but the application keeps it disabled while product information is loading.
+
+Once loading finishes, the button becomes enabled.
+
+Your test's next action is:
+
+```java
+addToCart.click();
+```
+
+what would you use:
+
+A. `presenceOfElementLocated()`
+
+B. `visibilityOfElementLocated()`
+
+C. `elementToBeClickable()`
+
+And **why are the other two less appropriate for this particular situation**?
+
+### Waiting for Text
+
+Now let's move away from element state.
