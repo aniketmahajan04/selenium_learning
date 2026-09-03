@@ -511,3 +511,69 @@ titleContains("MyStore")
 And here's the important question:
 
 **Why would `titleIs()` fragile in this situations?**
+
+### Reusable Wait Utilities
+
+Now we're reaching the final part of today's lesson.
+
+So far you've been writing:
+
+```java
+wait.until(
+    ExpectedConditions.visibilityOfElementLocated(By.id("username"))
+);
+```
+
+Then somewhere else:
+
+```java
+wait.until(
+    ExpectedConditions.visibilityOfElementLocated(By.id("password"))
+);
+```
+
+And elsewhere:
+
+```java
+wait.until(
+    ExpectedConditions.visibilityOfElementLocated(By.id("dashboard"))
+);
+```
+
+Imagine that doing that across **50 tests**.
+
+The idea is to hide the implementation detail:
+
+```java
+Test
+ │
+ ├── waitForElementVisible(...)
+ │
+ └── waitForElementClickable(...)
+             ↓
+       Wait Utility
+             ↓
+        WebDriverWait
+             ↓
+     ExpectedConditions
+```
+
+So instead of your test knowing how the wait works, it simply expresses what it needs.
+
+For example, conceptually:
+
+```java
+waitForElementVisible(By.id("username"));
+```
+
+rather than:
+
+```java
+wait.until(
+    ExpectedConditions.visibilityOfElementLocated(
+        By.id("username")
+    )
+);
+```
+
+This is our first step toward separation of concerns—something you'll use heavily later with Page Object Model and framework design.
