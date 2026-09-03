@@ -216,3 +216,144 @@ And **why are the other two less appropriate for this particular situation**?
 ### Waiting for Text
 
 Now let's move away from element state.
+
+Imagine a login application:
+
+```html
+<div id="status">Logging in...</div>
+```
+
+A few seconds later, Javascript changes it to:
+
+```html
+<div id="status">Login successful</div>
+```
+
+Your test needs to continue only when the status `"Login successful"`
+
+You could locate the element:
+
+```java
+WebElement status = driver.findElement(By.id("status"));
+```
+
+But here's the problem:
+
+```text
+0 sec → Logging in...
+1 sec → Logging in...
+2 sec → Logging in...
+3 sec → Login successful
+```
+
+Simply waiting for the element's **visibility** isn't enough because the element was visible from the beginning.
+
+We need to wait for a **change in its text**.
+
+Selenium provides:
+
+```java
+ExpectedConditions.textToBePresentInElementLocated(...);
+```
+
+Conceptually:
+
+```java
+wait.until(
+    ExpectedConditions.textToBePresentInElementLocated(By.id("status"), "Login successful")
+);
+```
+
+The important difference is:
+
+```text
+visibility
+    ↓
+"Is the element visible?"
+
+text condition
+    ↓
+"Does the element currently contain the text I expect?"
+```
+
+**Your next challenge — URL changes**
+
+Now let's apply the same reasoning to something that isn't an element.
+
+Suppose your test does:
+
+```java
+driver.findElement(By.id("login")).click();
+```
+
+The application performs login and then redirects:
+
+```text
+/login
+   ↓
+/dashboard
+```
+
+You don't necessarily care whether a particular dashboard element is visible yet.
+
+Your requirement is:
+
+> **Wait until the browser URL contains `/dashboard`**.
+
+Which condition would you expect to use?
+
+Think about the distinction:
+
+```
+Element-related condition
+        vs
+Browser/navigation-related condition
+```
+
+**Your task**
+
+Tell me:
+
+1. Which `ExpectedConditions` method you would use.
+2. Why an element visibility condition would be the wrong abstraction here.
+3. What you think the Java code would roughly look like.
+
+---
+
+**Now let's test your understanding**
+
+Imagine this login flow:
+
+```
+Click Login
+↓
+URL changes to /dashboard
+↓
+Dashboard HTML loads
+↓
+"Welcome, Sendo" becomes visible
+```
+
+Your test has two different requirements:
+
+**Requirement 1**
+
+Wait until the browser reaches:
+
+```
+/dashboard
+```
+
+**Requirement 2**
+
+Then wait until:
+
+```
+"Welcome, Sendo"
+```
+
+is visible.
+
+Would you use **one wait condition or two separate wait conditions?**
+
+And what conditions would you choose for each?
