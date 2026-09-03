@@ -408,4 +408,106 @@ selection → Is it selected?
 
 Again, we're matching the wait condition to the **state we actually care about**.
 
-Your challenge:
+**Your challenge**:
+
+Suppose you have:
+
+```html
+<input id="subscribe" type="checkbox" />
+```
+
+Your test clicks it and then needs to verify that it became selected.
+
+Which condition is most appropriate?
+
+**A.** `visibilityOfElementLocated()`
+
+**B.** `elementToBeClickable()`
+
+**C.** `elementToBeSelected()`
+
+**D.** `presenceOfElementLocated()`
+
+And tell me **why `isSelected()` by itself isn't a synchronization mechanism**.
+
+### Title Changes
+
+Now lets's step away from elements completely.
+
+Suppose your application changes the browser title after login:
+
+```text
+Before:
+Login | MyApp
+
+After:
+Dashboard | MyApp
+```
+
+Your test requirement is:
+
+> "Continue only when the page title contains `Dashboard`."
+
+Notice that **there may be no element involve in this requirement at all**
+
+Selenium provides:
+
+```java
+ExpectedConditions.titleContains("Dashboard")
+```
+
+So:
+
+```java
+wait.until(
+    ExpectedConditions.titleContains("Dashboard")
+);
+```
+
+There is also a condition for an exact title.
+
+```java
+ExpectedConditions.title("Dashboard | MyApp")
+```
+
+The reasoning is similar to URL conditions:
+
+```text
+titleContains()
+    ↓
+Useful when only part of the title is stable
+
+titleIs()
+    ↓
+Useful when the complete title is known and stable
+```
+
+**Your challenge**
+
+Suppose the application produces these titles:
+
+```text
+Product 123 | MyStore
+Product 456 | MyStore
+Product 789 | MyStore
+```
+
+The product number changes dynamically, but your test needs to wait until you're on **any product page**.
+
+Which would be more appropriate?
+
+**A.**
+
+```java
+titleIs("Product 123 | MyStore")
+```
+
+**B.**
+
+```java
+titleContains("MyStore")
+```
+
+And here's the important question:
+
+**Why would `titleIs()` fragile in this situations?**
