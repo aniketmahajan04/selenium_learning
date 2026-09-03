@@ -577,3 +577,5 @@ wait.until(
 ```
 
 This is our first step toward separation of concerns—something you'll use heavily later with Page Object Model and framework design.
+
+<span style="color:red">NOTE:- Check this week notes.</span>

@@ -3,7 +3,7 @@ package com.sendo;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import java.time.Duration;
+import com.sendo.utils.WaitUtility;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -23,13 +23,16 @@ public class Main {
 
             driver.get("https://www.selenium.dev/selenium/web/dynamic.html?utm_source=chatgpt.com");
 
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            // WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
             WebElement revealButton = driver.findElement(By.id("reveal"));
 
             revealButton.click();
 
-            WebElement revealedButton = waitForElementVisibility(By.id("revealed"), wait);
+            // WebElement revealedButton = waitForElementVisibility(By.id("revealed"),
+            // wait);
+            WaitUtility waitUtils = new WaitUtility(driver);
+            WebElement revealedButton = waitUtils.waitForElementVisibility(By.id("revealed"));
 
             System.out.println("Revealed is visible");
 
