@@ -17,7 +17,7 @@ public class Main {
 
             Select select = new Select(dropdown);
 
-            // select.selectByVisibleText("Two");
+            // select.selectByVisibleText("मराठी");
             // select.selectByValue("2");
             select.selectByIndex(2);
 
