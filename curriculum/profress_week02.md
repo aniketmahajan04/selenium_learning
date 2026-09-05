@@ -2,8 +2,8 @@
 
 ## Current Status
 
-- Current Day: Day 10
-- Current Topic: Dropdowns and Select
+- Current Day: Day 11
+- Current Topic: Alerts and Popups
 - Status: Completed
 - Week: Week 2
 
@@ -60,7 +60,24 @@
 - Choosing locators based on actual DOM attributes/text
 - Avoiding position-dependent selection when a specific option is required
 
----
+## Day 11 — Alerts and Popups
+
+- JavaScript alerts
+- Confirmation dialogs
+- Prompt dialogs
+- `switchTo().alert()`
+- `Alert`
+- `accept()`
+- `dismiss()`
+- `getText()`
+- `sendKeys()`
+- `ExpectedConditions.alertIsPresent()`
+- Waiting for alerts with `WebDriverWait`
+- `NoAlertPresentException`
+- Difference between browser dialogs and normal DOM elements
+- Reusable alert wait utility
+
+## Checking whether an alert is present after dismissal
 
 ## What I Understand
 
@@ -123,100 +140,82 @@
 - `By.name("Maharashtra")` is incorrect when the element has no name attribute.
 - Custom options can be located using actual attributes and visible text.
 
+- JavaScript alerts are browser dialogs, not normal webpage DOM elements.
+- Normal findElement() locators cannot locate their OK/Cancel controls or prompt input.
+- driver.switchTo().alert() switches Selenium to the currently present JavaScript alert.
+- switchTo().alert() does not automatically wait.
+- If no alert is present, switchTo().alert() throws NoAlertPresentException.
+- accept() is equivalent to choosing OK.
+- dismiss() is equivalent to choosing Cancel.
+- getText() returns the message displayed by the JavaScript alert.
+- getText() does not return the value typed into a prompt input.
+- sendKeys() sends keyboard input to a JavaScript prompt's input field.
+- ExpectedConditions.alertIsPresent() can be used with WebDriverWait to wait for an alert.
+- A professional alert flow is: trigger dialog → wait for alert → obtain Alert → interact → accept/dismiss.
+- The alert message and prompt input value are separate concepts.
+- A helper such as isAlertPresent() can use switchTo().alert() and NoAlertPresentException to check alert presence.
+- Method names should accurately describe what their return values mean.
+
 ---
 
 ## Professional Practices Learned
 
 - Prefer condition-based waits over arbitrary fixed delays.
-- Choose a wait condition based on what the next operation requires.
-- Use `WebDriverWait` for normal explicit-wait scenarios.
-- Use `FluentWait` when customized polling or exception handling is needed.
-- Avoid blindly using `Thread.sleep()` to solve synchronization problems.
-- Avoid unnecessary checks after a wait condition has already established the required state.
-- Understand the difference between DOM presence, visibility, and clickability.
-- Synchronize with application state instead of guessing how long an operation will take.
-
-- Prefer condition-based waits over arbitrary fixed delays.
-- Choose a wait condition based on what the next operation requires.
-- Use `WebDriverWait` for normal explicit-wait scenarios.
-- Use `FluentWait` when customized polling or exception handling is needed.
-- Avoid blindly using `Thread.sleep()` to solve synchronization problems.
-- Avoid unnecessary checks after a wait condition has already established the required state.
-- Distinguish DOM presence, visibility, clickability, text state,selection state, URL state, and title state.
-- Keep reusable Selenium infrastructure inside utility classes instead of duplicating wait implementation across tests.
-- Prefer constructor chaining when multiple constructors share initialization logic.
-- Support a sensible default timeout while allowing a custom timeout when a test genuinely requires one.
-- Keep test code focused on test intent rather than WebDriverWait mechanics.
-
-- Inspect the DOM before using Selenium's `Select` class.
-- Use `selectByValue()` when the HTML value is a suitable stable identifier.
-- Use `selectByVisibleText()` when user-facing text is the appropriate stable identifier.
-- Use `selectByIndex()` when the requirement explicitly depends on position.
-- Treat custom dropdowns as normal web elements rather than forcing them into the `Select` abstraction.
-- Use explicit waits for dynamically rendered or interactable custom dropdown options.
-- Choose `elementToBeClickable()` when the next operation is a click.
-- Keep locators grounded in the actual DOM.
-- Avoid fragile position-dependent automation when a specific business option is required.
-- Continue avoiding `Thread.sleep()` in favor of condition-based synchronization.
-- Keep test code focused on test intent and reusable wait utilities for synchronization mechanics.
+- Match the wait condition to the next action or verification.
+- Avoid blindly using `Thread.sleep()`.
+- Keep reusable Selenium infrastructure inside utility classes.
+- Keep test code focused on test intent.
+- Choose stable, DOM-grounded locators.
+- Treat custom dropdowns as normal web elements.
+- Treat JavaScript dialogs differently from DOM elements.
+- Wait for alert presence instead of assuming the dialog is immediately available.
+- Use the `Alert` API rather than DOM locators for JavaScript dialogs.
+- Use descriptive names such as `promptAlert` and `isAlertPresent()`.
+- Handle `NoAlertPresentException` when checking alert presence.
+- Avoid misleading method names whose return values do not match their names.
 
 ---
 
 ## Weak Areas
 
-- Need more practice choosing the most appropriate Expected Condition for different scenarios.
-- Need more practice creating reusable wait utilities.
 - Need more practice choosing the most appropriate Expected Condition for unfamiliar scenarios.
-- Need more practice with `elementToBeSelected()`.
-- Need more practice designing reusable wait utilities and deciding when custom timeout values are justified.
-- Should continue practicing the distinction between visibility and actual interactability.
-
-- Need more practice choosing between selectByValue() and selectByVisibleText() based on application-specific stability.
+- Need more practice designing reusable wait utilities.
+- Need more practice choosing between `selectByValue()` and `selectByVisibleText()` based on application-specific stability.
 - Need more practice writing robust locators for custom dropdown options.
-- Need more practice distinguishing visibility from clickability in dynamic custom UIs.
-- Continue practicing stable locator selection for dynamic interfaces.
+- Need more practice distinguishing visibility from clickability in dynamic UIs.
+- Need more practice with assertions for alert messages and resulting application state.
+- The Selenium alerts practice page did not visibly populate the prompt input when using `Alert.sendKeys()`, although the prompt appeared and manual typing worked.
 
 ---
 
 ## Mistakes I Made
 
 - Initially thought `findElement()` automatically waits for an element.
-- Learned that the default implicit wait is zero.
-- Initially used `Duration.ofSeconds(500)` when intending a 500 ms polling interval.
-- Corrected it to `Duration.ofMillis(500)`.
-- Initially checked `isDisplayed()` after `visibilityOfElementLocated()`; learned that this check is redundant.
-- Learned to distinguish DOM presence, visibility, and clickability.
-
-- Initially chose `visibilityOfElementLocated()` for a selection-state scenario; learned that `elementToBeSelected()` is the condition for a changing selected state.
-- Initially chose `visibilityOfElementLocated()` for a scenario where an already-visible element's text was changing; learned to use `textToBePresentInElementLocated()`.
-- Used Google to check the selection-related Expected Condition; then reviewed the reasoning instead of simply memorizing the API.
-
-- Initially suggested using `selectByVisibleText()` for a custom dropdown after correctly identifying it as custom.
-- Learned that `selectByVisibleText()` belongs to Selenium's Select class and requires a native `<select>` element.
-- Used `By.name("Maharashtra")` even though the provided custom option had no name attribute.
-- Corrected the custom dropdown approach to locate the actual option using DOM attributes/text and wait for it to become clickable.
-- Correctly recognized that `selectByIndex()` is appropriate when the requirement explicitly specifies a position.
-- Correctly applied `elementToBeClickable()` when the next operation is clicking the custom dropdown button or option.
+- Initially used `Duration.ofSeconds(500)` when intending a 500 ms polling interval; corrected it to `Duration.ofMillis(500)`.
+- Initially checked `isDisplayed()` after `visibilityOfElementLocated()`; learned this is redundant.
+- Initially chose the wrong Expected Condition for selection state and asynchronous text changes.
+- Initially suggested `selectByVisibleText()` for a custom dropdown; learned that Select requires a native `<select>`.
+- Used `By.name("Maharashtra")` when the custom option had no name attribute; corrected the locator to actual DOM attributes/text.
+- Initially considered that `switchTo().alert()` might return null or wait automatically; learned it throws `NoAlertPresentException` when no alert exists.
+- Created `isAlertGone()` whose return value actually meant an alert was present; learned to use a name such as `isAlertPresent()` that matches the return value.
+- Correctly reasoned that after `confirm.dismiss()`, an alert-presence check should return false.
 
 ---
 
 ## Next Lesson
 
-## Day 11 — Alerts and Popups
+## Day 12 — Frames and IFrames
 
 ###
 
-- JavaScript alerts
-- Confirmation dialogs
-- Prompt dialogs
-- `switchTo().alert()`
-- Accept
-- Dismiss
-- Get text
-- Send keys
+- What an iframe is
+- Why Selenium cannot directly access its contents
+- Switching into a frame
+- Switching back to default content
+- Nested frames
 
 ---
 
 ## Last Updated
 
-Day 10 completed — Dropdowns and Select completed.
+Day 11 completed — Alerts and Popups
