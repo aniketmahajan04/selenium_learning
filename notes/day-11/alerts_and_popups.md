@@ -181,3 +181,56 @@ Prompt → type `Sendo` → click **OK**
 Don't worry about assertions or waits yet.
 
 Write the Java code yourself using what you've learned so far.
+
+### `switchTo().alert()`
+
+**What happens if you execute:**
+
+```java
+driver.switchTo().alert();
+```
+
+when **no alert is currently present?**
+
+Do you think Selenium:
+
+**A.** Returns `null`
+**B.** Waits automatically until an alert appears
+**C.** Throws an exception
+**D.** Creates an empty alert object
+
+Think about it before answering.
+
+The correct answer is **C. It throws an exception. <span style="color:red">❌</span>**
+
+Specially, Selenium throws an `NoAlertPresentException` when you try:
+
+```java
+driver.switchTo().alert();
+```
+
+while no alert is present.
+
+**Why this matters**
+
+This is exactly why we introduced:
+
+```java
+Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+```
+
+The difference is:
+
+```java
+driver.switchTo().alert();
+```
+
+➡️ Try right now. If no alert → exception.
+
+Whereas:
+
+```java
+wait.until(ExpectedConditions.alertIsPresent());
+```
+
+➡️ Keep waiting until the alert appears, or timeout occurs.
