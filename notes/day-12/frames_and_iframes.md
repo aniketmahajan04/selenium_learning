@@ -305,3 +305,129 @@ driver.findElement(By.id("submit"));
 ```
 
 **What do you think will happen if you try that immediately, without switching back?**
+
+### Let's go one level deeper: nested frames
+
+This is where frame context becomes really important.
+
+Imagine:
+
+```
+Main Page
+│
+└── iframe A
+     │
+     └── iframe B
+          │
+          └── input#email
+```
+
+If you want to interact with `email`, you can't simply switch to iframe B from the main page.
+
+You need to go:
+
+```
+Main Page
+   ↓
+iframe A
+   ↓
+iframe B
+   ↓
+email
+```
+
+For example:
+
+```java
+driver.switchTo().frame(frameA);
+driver.switchTo().frame(frameB);
+
+driver.findElement(By.id("email")).sendKeys("test@example.com");
+```
+
+Now here's an important question:
+
+**If you're currently inside iframeB, and you call `driver.switchTo().defaultContent()`, where will Selenium end up — iframe A, iframe B, or the main page?**
+
+Explanation:
+
+This is where Selenium gives you two different choices.
+
+If you're inside **iframe B** and call:
+
+```java
+driver.switchTo().defaultContent();
+```
+
+Selenium jumps **all the way back to the main page.**
+
+So:
+
+```
+Main Page
+   ↓
+iframe A
+   ↓
+iframe B
+```
+
+Calling:
+
+```java
+driver.switchTo().defaultContent();
+```
+
+takes you here:
+
+```
+Main Page
+```
+
+It does not stop at iframe A.
+
+If you want to move up only **one level**, Selenium provides:
+
+```java
+driver.switchTo().parentFrame();
+```
+
+So from iframe B:
+
+```
+iframe B
+   ↓ parentFrame()
+iframe A
+```
+
+And then another:
+
+```java
+driver.switchTo().parentFrame();
+```
+
+would take you frame iframe A back to the main page.
+
+So the rule is:
+
+- `defaultContent()` → go to the top/main page
+- `parentFrame()` → go up one frame level
+
+**One more important scenario**
+
+Suppose the structure is;
+
+```
+Main Page
+├── iframe A
+│    └── iframe B
+│         └── input
+│
+└── iframe C
+     └── button
+```
+
+You're currently inside **iframe B** and want to interact with something inside **iframe C**.
+
+Think through the navigation yourself:
+
+**What sequence of frame-switching operations would you perform to get from iframe B -> iframe C?**
