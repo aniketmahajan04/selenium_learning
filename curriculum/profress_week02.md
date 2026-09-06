@@ -2,8 +2,8 @@
 
 ## Current Status
 
-- Current Day: Day 11
-- Current Topic: Alerts and Popups
+- Current Day: Day 12
+- Current Topic: Frames / iFrames
 - Status: Completed
 - Week: Week 2
 
@@ -76,8 +76,23 @@
 - `NoAlertPresentException`
 - Difference between browser dialogs and normal DOM elements
 - Reusable alert wait utility
+- Checking whether an alert is present after dismissal
 
-## Checking whether an alert is present after dismissal
+### Day 12 — Frames / iFrames
+
+- What an iframe is
+- Why Selenium cannot directly access its contents
+- Switching into a frame
+- Switching back to default content
+- Nested frames
+- `driver.switchTo().frame(...)`
+- `driver.switchTo().defaultContent()`
+- `driver.switchTo().parentFrame()`
+- Switching by `WebElement`
+- Switching by zero-based index
+- Switching by `id` / `name`
+- Choosing stable frame locators
+- Understanding current browsing context
 
 ## What I Understand
 
@@ -156,6 +171,27 @@
 - A helper such as isAlertPresent() can use switchTo().alert() and NoAlertPresentException to check alert presence.
 - Method names should accurately describe what their return values mean.
 
+- An `<iframe>` embeds another HTML document and creates a separate browsing context.
+- Selenium initially operates in the main/top-level document.
+- `findElement()` searches relative to Selenium's current browsing context.
+- Selenium cannot directly find an element inside an iframe while operating in the parent/main context.
+- The professional flow is: locate iframe → switch into it → locate/interact with elements inside it.
+- `driver.switchTo().frame(WebElement)` switches using a frame WebElement.
+- `driver.switchTo().frame(int)` switches using a zero-based frame index.
+- `driver.switchTo().frame(String)` can switch using a frame id or name.
+- `driver.switchTo().defaultContent()` returns all the way to the main/top-level document.
+- `driver.switchTo().parentFrame()` moves one level upward.
+- Nested frames require entering the parent frame before the child frame.
+- `parentFrame()` from iframe B moves B → iframe A.
+- `defaultContent()` from a nested iframe moves directly to the main page.
+- When switching from a nested frame to a sibling frame, `defaultContent()` can return to the main page first.
+- A previously located WebElement can remain usable across frame switching if the underlying element has not become stale and Selenium is returned to the appropriate context before interacting with it.
+- StaleElementReferenceException can occur if the underlying DOM element is removed or recreated.
+- Frame indexes are fragile when frames can be added/reordered.
+- Prefer stable frame identifiers when available and actually stable.
+- `driver.switchTo().frame(By.id(...))` is invalid because `frame()` accepts a WebElement, index, or String name/id, not a By locator.
+- `findElement()` inside a frame searches within the current frame context.
+
 ---
 
 ## Professional Practices Learned
@@ -204,18 +240,27 @@
 
 ## Next Lesson
 
-## Day 12 — Frames and IFrames
+## Day 13 — Windows, Tabs and Actions
 
 ###
 
-- What an iframe is
-- Why Selenium cannot directly access its contents
-- Switching into a frame
-- Switching back to default content
-- Nested frames
+### Windows/Tabs
+
+- Window handles
+- Current window
+- Switching windows
+- Multiple tabs
+
+### Actions API
+
+- Hover
+- Right click
+- Double click
+- Drag and drop
+- Keyboard actions
 
 ---
 
 ## Last Updated
 
-Day 11 completed — Alerts and Popups
+Day 12 completed — Frames and iFrames
