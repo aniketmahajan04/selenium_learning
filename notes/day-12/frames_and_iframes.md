@@ -204,3 +204,104 @@ mainButton.click();
 ```
 
 **Yes, Selenium supports this. <span style="color:green">✅</span>**
+
+Why?
+
+Because `mainButton` is already a `WebElement` reference to an element in the **main page**. Switching into the iframe changes Selenium's **current browsing context**, but it doesn't automatically invalidate every `WebElement` you previously located.
+
+Think of it like:
+
+```
+mainButton → reference to element on Main Page
+
+Switch into iframe
+      ↓
+Selenium searches inside iframe now
+
+switch back to main page
+      ↓
+mainButton → can be used again
+```
+
+**But there's an important professional caveat ⚠**
+
+A `WebElement` reference can become invalid if the page/DOM changes and that particular element is removed or recreated. Then Selenium can throw:
+
+```
+StaleElementReferenceException
+```
+
+So don't learn the rule as:
+
+> "Once I locate an element, I can always use it later."
+
+Instead, the professional rule is:
+
+> **A WebElement remains usable as long as the underlying DOM element it refers to still exists and hasn't become stale.**
+
+And one more subtle point: **you generally need to be in correct browsing context when interacting with the element**. So your `mainButton` example works because you switch back to `defaultContent()` before clicking it.
+
+### Switching into an iframe
+
+These are **Three common ways** Selenium can switch into a frame:
+
+```java
+driver.switchTo().frame();
+```
+
+The `...` can be:
+
+**1.** A `WebElement`
+**2.** A frame index
+**3.** A frame name/id
+
+We'll learn them in that order because `WebElement` **is the approach I want you to become most comfortable with first**.
+
+**1. Using the iframe `WebElement`**
+
+For example:
+
+```java
+WebElement frame = driver.findElement(By.id("paymentFrame"));
+```
+
+After this:
+
+```java
+driver.findElement(By.id("cardNumber"));
+```
+
+searches inside `paymentFrame`, not the main page.
+
+**Now let's reason about it**
+
+Imagine this page:
+
+```html
+<iframe id="loginFrame">
+  <!-- separate document -->
+  <input id="username" />
+  <input id="password" />
+</iframe>
+
+<button id="submit">Submit</button>
+```
+
+And you write:
+
+```java
+WebElement frame = driver.findElement(By.id("loginFrame"));
+driver.switchTo().frame(frame);
+
+driver.findElement(By.id("username")).sendKeys("Sendo");
+```
+
+That makes sense.
+
+But now suppose you want to find:
+
+```java
+driver.findElement(By.id("submit"));
+```
+
+**What do you think will happen if you try that immediately, without switching back?**
