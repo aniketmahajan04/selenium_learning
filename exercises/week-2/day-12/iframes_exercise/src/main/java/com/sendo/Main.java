@@ -1,17 +1,49 @@
 package com.sendo;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
 public class Main {
     static void main() {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        IO.println(String.format("Hello and welcome!"));
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            IO.println("i = " + i);
+        WebDriver driver = new ChromeDriver();
+
+        try {
+            driver.get("https://www.selenium.dev/selenium/web/iframes.html?utm_source=chatgpt.com");
+
+            WebElement frame = driver.findElement(By.id("iframe1"));
+
+            driver.switchTo().frame("iframe1-name");
+
+            WebElement emailInput = driver.findElement(By.id("email"));
+
+            emailInput.sendKeys("sendo@gmail.com");
+
+            driver.switchTo().defaultContent();
+
+            WebElement mainHeading = driver.findElement(By.id("iframe_page_heading"));
+            System.out.println(mainHeading.getText());
+
+            WebElement outerIframe = driver.findElement(By.id("outer"));
+
+            driver.switchTo().frame(outerIframe);
+
+            WebElement innerIframe = driver.findElement(By.id("inner"));
+
+            driver.switchTo().frame(innerIframe);
+
+            WebElement emailInput = driver.findElement(By.tagName("input"));
+            emailInput.sendKeys("sendo@gmail.com");
+
+            driver.switchTo().defaultContent();
+
+            WebElement submitButton = driver.findElement(By.id("submit"));
+            submitButton.click();
+        } finally {
+            // driver.quit();
         }
+
     }
 }
