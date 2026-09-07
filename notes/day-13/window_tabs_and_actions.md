@@ -153,3 +153,5 @@ Don't look for a solution yet.
 8. Print its title or URL.
 
 **Hint**: You already know one handle—the original tab. The new handle is the one that is **not equal to the original handle**.
+
+Then we'll move to an important professional question: **how do we safely switch to a newly opened tab when there are already 3 or 4 tabs?**

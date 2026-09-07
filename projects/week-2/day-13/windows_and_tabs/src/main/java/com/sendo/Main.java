@@ -1,5 +1,7 @@
 package com.sendo;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 
 import org.openqa.selenium.By;
@@ -15,22 +17,47 @@ public class Main {
         try {
             driver.get("https://demoqa.com/browser-windows?utm_source=chatgpt.com");
 
-            String currentWindowHandle = driver.getWindowHandle();
+            // Set<String> currentWindowHandle = driver.getWindowHandles();
+            // driver.findElement(By.id("tabButton")).click();
+
+            // Set<String> allWindowHandles = driver.getWindowHandles();
+
+            // for (String window : allWindowHandles) {
+            // System.out.println(window);
+            // if (!currentWindowHandle.equals(window)) {
+            // driver.switchTo().window(window);
+            // }
+            // }
+
+            String beforeHandle = driver.getWindowHandle();
+
+            Set<String> afterHandle;
 
             driver.findElement(By.id("tabButton")).click();
 
-            Set<String> allWindowHandles = driver.getWindowHandles();
+            afterHandle = driver.getWindowHandles();
 
-            for (String window : allWindowHandles) {
-                System.out.println(window);
-                if (!currentWindowHandle.equals(window)) {
-                    driver.switchTo().window(window);
-                }
+            for (String handle : afterHandle) {
+                System.out.println(handle);
             }
 
-            System.out.println(driver.getCurrentUrl());
+            afterHandle.remove(beforeHandle);
 
-        } finally {
+            for (String handle : afterHandle) {
+                driver.switchTo().window(handle);
+
+            }
+
+            IO.println(driver.getCurrentUrl());
+
+            driver.close();
+            driver.switchTo().window(beforeHandle);
+
+            IO.println(driver.getCurrentUrl());
+
+        } finally
+
+        {
             driver.quit();
         }
 
