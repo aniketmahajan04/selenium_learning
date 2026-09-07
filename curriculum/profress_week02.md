@@ -2,8 +2,8 @@
 
 ## Current Status
 
-- Current Day: Day 12
-- Current Topic: Frames / iFrames
+- Current Day: Day 13
+- Current Topic: Windows, Tabs and Actions
 - Status: Completed
 - Week: Week 2
 
@@ -93,6 +93,23 @@
 - Switching by `id` / `name`
 - Choosing stable frame locators
 - Understanding current browsing context
+
+### Day 13 — Windows, Tabs and Actions
+
+- Window Handles
+- `driver.getWindowHandle()`
+- `driver.getWindowHandles()`
+- Switching Windows/Tabs
+- Finding a Newly Opened Tab
+- Returning to the Original Window
+- Actions API
+- Hover
+- Right Click
+- Double Click
+- Drag and Drop
+- Keyboard Actions
+
+---
 
 ## What I Understand
 
@@ -240,27 +257,17 @@
 
 ## Next Lesson
 
-## Day 13 — Windows, Tabs and Actions
+## Day 14 — Screenshots + Week 2 Project
 
 ###
 
-### Windows/Tabs
-
-- Window handles
-- Current window
-- Switching windows
-- Multiple tabs
-
-### Actions API
-
-- Hover
-- Right click
-- Double click
-- Drag and drop
-- Keyboard actions
+- Taking screenshots
+- Saving screenshots
+- Screenshot on test failure
+- Debugging failed tests
 
 ---
 
 ## Last Updated
 
-Day 12 completed — Frames and iFrames
+Day 13 completed — Windows, Tabs and Actions
