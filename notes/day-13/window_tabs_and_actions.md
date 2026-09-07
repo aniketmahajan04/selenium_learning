@@ -17,6 +17,8 @@ Learn how Selenium handles multiple browser window/tabs and begin working the Ac
 - Drag and drop
 - Keyboard actions
 
+[Windows and tabs practice link](https://demoqa.com/browser-windows?utm_source=chatgpt.com)
+
 ### Window and Tabs
 
 Let's start with the most important concept: **window handles**.
@@ -136,3 +138,18 @@ Which one contains **only the handle of Tab A?**
 A. `all`
 B. `current`
 C. Both
+
+**Your first exercise**
+
+Don't look for a solution yet.
+
+1. Open the page with Selenium.
+2. Save the original window handle.
+3. Click **New Tab**.
+4. Get all window handles.
+5. Print the number of handles.
+6. Figure out which handle belongs to the new tab.
+7. Switch to the new tab.
+8. Print its title or URL.
+
+**Hint**: You already know one handle—the original tab. The new handle is the one that is **not equal to the original handle**.
