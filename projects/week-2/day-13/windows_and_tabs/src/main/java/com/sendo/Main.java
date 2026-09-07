@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WebDriver.Window;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 
 public class Main {
     static void main() {
@@ -29,36 +30,39 @@ public class Main {
             // }
             // }
 
-            String beforeHandle = driver.getWindowHandle();
+            // String beforeHandle = driver.getWindowHandle();
 
-            Set<String> afterHandle;
+            // Set<String> afterHandle;
 
-            driver.findElement(By.id("tabButton")).click();
+            // driver.findElement(By.id("tabButton")).click();
 
-            afterHandle = driver.getWindowHandles();
+            // afterHandle = driver.getWindowHandles();
 
-            for (String handle : afterHandle) {
-                System.out.println(handle);
-            }
+            // for (String handle : afterHandle) {
+            // System.out.println(handle);
+            // }
 
-            afterHandle.remove(beforeHandle);
+            // afterHandle.remove(beforeHandle);
 
-            for (String handle : afterHandle) {
-                driver.switchTo().window(handle);
+            // for (String handle : afterHandle) {
+            // driver.switchTo().window(handle);
 
-            }
+            // }
 
-            IO.println(driver.getCurrentUrl());
+            // IO.println(driver.getCurrentUrl());
 
-            driver.close();
-            driver.switchTo().window(beforeHandle);
+            // driver.close();
+            // driver.switchTo().window(beforeHandle);
 
-            IO.println(driver.getCurrentUrl());
+            // IO.println(driver.getCurrentUrl());
 
-        } finally
+            WebElement buttonWithMouseAction = driver.findElement(By.id("tabButton"));
 
-        {
-            driver.quit();
+            Actions action = new Actions(driver);
+
+            action.moveToElement(buttonWithMouseAction).click();
+        } finally {
+            // driver.quit();
         }
 
     }

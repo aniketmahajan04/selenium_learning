@@ -155,3 +155,122 @@ Don't look for a solution yet.
 **Hint**: You already know one handle—the original tab. The new handle is the one that is **not equal to the original handle**.
 
 Then we'll move to an important professional question: **how do we safely switch to a newly opened tab when there are already 3 or 4 tabs?**
+
+### What is the Action API?
+
+So far, we're mostly interacted with element directly:
+
+```java
+element.click();
+element.sendKeys();
+```
+
+But some user interactions are some like what a real human does with a mouse:
+
+- Move the mouse over something
+- Right click
+- Double-click
+- Drag an element
+- Press keyboard keys
+
+For these, Selenium provides the `Action` **class**.
+
+The basic pattern is:
+
+```java
+Actions action = new Actions(driver);
+```
+
+Then you build an action, for example:
+
+```java
+action.moveToElement(element).perform();
+```
+
+**What does this mean?**
+
+Break it down:
+
+```
+actions
+   ↓
+moveToElement(element)
+   ↓
+perform()
+```
+
+`moveToElement(element)` says:
+
+> "Prepare a mouse movement to this element."
+
+`perform()` says:
+
+> "Actual execute the action."
+
+This is different from:
+
+```java
+element.click();
+```
+
+where you're directly telling the element to click.
+
+### Hover
+
+A hover means moving your mouse over an element without clicking it.
+
+Real-world example:
+
+```
+Move mouse → "Products"
+                  ↓
+             dropdown appears
+```
+
+With Selenium:
+
+```java
+WebElement products = driver.findElement(By.id("products"));
+
+Actions actions = new Actions(driver);
+
+actions.moveToElement(products).perform();
+```
+
+**Your first exercise**
+
+Let's use a website where hovering actually produces a visible result.
+
+Open:
+
+https://demoqa.com/menu
+
+You'll see a menu containing items such as **Main Item 2**.
+
+Your task:
+
+1. Open the page.
+2. Find Main Item 2.
+3. Create an Actions object.
+4. Hover over Main Item 2.
+5. Observe what happens in the browser.
+
+Don't worry about checking the dropdown yet.
+
+### Right-click with Actions
+
+Normally, Selenium's:
+
+```java
+element.click();
+```
+
+performs a **left-click**.
+
+For a **right-click**, we use the Actions API:
+
+```java
+actions.contextClick(element).perform();
+```
+
+The name `contextClick()` comes from the fact that a right-click normally opens the browser's **context menu**.
