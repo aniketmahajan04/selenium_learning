@@ -68,3 +68,71 @@ New tab opens
      ↓
 Need to test Help page
 ```
+
+Selenium **doesn't automatically start operating on the new tab** just because it opened.
+
+You need to explicitly switch Selenium's current window.
+
+This is similar to what you learned yesterday with frames:
+
+```
+Frames:
+switchTo().frame(...)
+switchTo().defaultContent()
+
+Windows/Tabs:
+switchTo().window(...)
+```
+
+The underlying idea is similar:
+
+> **Selenium has a current browsing context, and you explicitly change it when necessary.**
+
+**Your first reasoning question**
+
+Suppose this is the situation:
+
+```
+Tab A ← Selenium is currently here
+
+Click button
+
+Tab B opens
+```
+
+And we execute:
+
+```java
+Set<String> handles = driver.getWindowHandles();
+```
+
+What do you think handles contains?
+
+**A.** Only Tab A's handle
+**B.** Only Tab B's handle
+**C.** Both Tab A and Tab B handles
+
+And tell me **why?**
+
+**Now let's test your understanding**
+
+Suppose there are 3 tabs:
+
+```
+Tab A → current
+Tab B
+Tab C
+```
+
+You run:
+
+```java
+String current = driver.getWindowHandle();
+Set<String> all = driver.getWindowHandles();
+```
+
+Which one contains **only the handle of Tab A?**
+
+A. `all`
+B. `current`
+C. Both
