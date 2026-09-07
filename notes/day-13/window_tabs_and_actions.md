@@ -274,3 +274,141 @@ actions.contextClick(element).perform();
 ```
 
 The name `contextClick()` comes from the fact that a right-click normally opens the browser's **context menu**.
+
+**Pattern**
+
+```java
+Actions actions = new Actions(driver);
+
+actions.contextClick(element).perform();
+```
+
+Think:
+
+```
+contextClick(element)
+       ↓
+prepare right-click
+       ↓
+perform()
+       ↓
+execute it
+```
+
+### Double-click
+
+For a double-click, Selenium provides:
+
+```java
+actions.doubleClick(element).perform();
+```
+
+Same pattern again.
+
+**Your exercise:**
+Use the same tabButton and write the code that performs a double-click on it.
+
+### Drag and Drop
+
+This is the first Actions interaction where we're combining multiple mouse movements.
+
+Imagine you have:
+
+```
+Source                 Target
+┌─────────┐            ┌─────────┐
+│  Box A  │  ───────→  │  Box B  │
+└─────────┘            └─────────┘
+```
+
+A human does:
+
+```
+Mouse down on A
+      ↓
+Hold mouse button
+      ↓
+Move to B
+      ↓
+Release
+```
+
+Selenium gives us a convenient method:
+
+```java
+actions.dragAndDrop(source, target).perform();
+```
+
+Where:
+
+```java
+source
+```
+
+is the element you're dragging, and:
+
+```java
+target
+```
+
+is where you're dropping it.
+
+### Keyboard Actions
+
+So, far, our mouse actions were:
+
+```java
+actions.moveToElement(element).perform();
+actions.contextClick(element).perform();
+actions.doubleClick(element).perform();
+actions.dragAndDrop(source, target).perform();
+```
+
+Keyboard actions work similarly, but instead of controlling the mouse, `Actions` can control **Keyboard state and key presses.**
+
+**First concept: `sendKeys()`**
+
+You've already learned:
+
+```java
+element.sendKeys("hello");
+```
+
+With `Actions`, you can send keyboard input through the current interaction:
+
+```java
+actions.sendKeys("hello").perform();
+```
+
+But there's an important difference:
+
+```
+element.sendKeys("hello")
+        ↓
+sends keys to that specific element
+
+actions.sendKeys("hello")
+        ↓
+sends keys through the keyboard interaction
+```
+
+We can also work with special keys such as:
+
+```java
+Keys.ENTER
+Keys.TAB
+Keys.ESCAPE
+Keys.CONTROL
+Keys.SHIFT
+Keys.ALT
+```
+
+For example:
+
+```java
+actions.sendKeys(Keys.Enter).perform();
+```
+
+means:
+
+> "Press Enter"
