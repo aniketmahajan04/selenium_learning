@@ -110,3 +110,47 @@ Suppose your selenium code has:
 WebDriver driver = new ChromeDriver();
 driver.get("https://www.selenium.dev/selenium/web/web-form.html");
 ```
+
+We want:
+
+```
+Browser
+   ↓
+Take screenshot
+   ↓
+Temporary screenshot file
+   ↓
+Save it somewhere we choose
+```
+
+The API gives us a `File`:
+
+```java
+File source = screenshot.getScreenshotAs(OutputType.FILE);
+```
+
+But **getting screenshots and saving it to your desired location are two separate operations.**
+
+This distinction is important.
+
+**One important question**
+
+Right now the screenshots look something like:
+
+```
+/tmp/screenshot123456789.png
+```
+
+If your test fails and the program ends, do you think this temporary file is necessarily where you want your debugging screenshots to live"?
+
+Probably not.
+
+For real project, we'd want something like:
+
+```
+selenium-project/
+├── screenshots/
+│   ├── login-failure.png
+│   ├── product-search-failure.png
+│   └── cart-failure.png
+```
