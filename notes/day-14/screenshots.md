@@ -241,3 +241,178 @@ Test performs actions
 ```
 
 That's the professional use case.
+
+**Your next exercise**
+
+Let's build a small reusable method.
+
+Create:
+
+```java
+public static void takeScreenshot(WebDriver driver, String fileName)
+```
+
+Its responsibility should be:
+
+```
+Receive driver
+   ↓
+Take screenshot
+   ↓
+Create screenshots directory
+   ↓
+Save screenshot using fileName
+```
+
+You've already written every piece required for this.
+
+**Don't worry about exception handling yet.**
+
+**Think about existing screenshots**
+
+Earlier you discovered:
+
+```
+StandardCopyOption.REPLACE_EXISTING
+```
+
+But your reusable method currently has:
+
+```java
+Files.copy(srcFiles.toPath(), destinationFile);
+```
+
+What happens if you call:
+
+```java
+takeScreenshot(driver, "login-failure.png");
+```
+
+twice?
+
+The second call will encounter the same `FileAlreadyExistsException` you saw earlier.
+
+For a screenshot utility, do you think we should:
+
+**A.** Allow the second screenshot to fail because the file already exists?
+**B.** Automatically replace the previous screenshot?
+**C.** Generate a unique filename every time?
+
+There isn't necessarily one universal answer here. I want you to think like an automation engineer about what makes sense for failure screenshots.
+
+Which would you choose, and why?
+
+Explanation:
+
+```
+C we should generate the unique file name every time because there might be multiple test failed then we should capture them instead of replacing them
+```
+
+Ans:
+
+Exactly. **C is the strongest choice for failure evidence.**
+
+Our reasoning is correct:
+
+> Multiple tests can fail, and we don't want later failure to overwrite evidence from an earlier failure.
+
+For example:
+
+```
+screenshots/
+├── LoginTest_20260908_101530.png
+├── ProductSearchTest_20260908_101545.png
+└── AddToCartTest_20260908_101601.png
+```
+
+Now each failure has its own artifact.
+
+**Professional Thinking**
+
+There are actually two useful concepts here:
+
+**Test identity + uniqueness**
+
+A professional filename might contains:
+
+```
+<TestName>_<timestamp>.png
+```
+
+or something:
+
+```
+<TestName>_<UUID>.png
+```
+
+The timestamp makes the screenshot easy for human to understand; a UUID virtually guarantees uniqueness.
+
+You just made an important architectural decision:
+
+> "Failure artifacts should be preserved, not overwritten".
+
+That's exactly the kind of reasoning I want you developing - not merely memorizing `getScreenShotAs()`.
+
+**Let's implement it**
+
+We don't want the caller to have to generate filename manually.
+
+Instead of:
+
+```java
+takeScreenshot(driver, "homepage.png");
+```
+
+we could eventually have something conceptually like:
+
+```java
+takeScreenshot(driver, "LoginPage");
+```
+
+and the utility generates:
+
+```
+LoginTest_20260908.png
+```
+
+**Your Exercise**
+
+Use Java's date/time API to generate a timestamp.
+
+Think about what you've learned in java:
+
+```java
+LocalDateTime
+DateTimeFormatter
+```
+
+We want a timestamp formatted roughly like:
+
+```
+20260908_143015
+```
+
+So:
+
+```
+yyyyMMdd_HHmmss
+```
+
+**Your task**:
+
+**1.** Create a DateTimeFormatter.
+**2.** Create a timestamp using LocalDateTime.now().
+**3.** Combine it with the supplied filename.
+**4.** Make sure the final filename ends in .png.
+
+For example, If the caller passes:
+
+```
+"LoginPage"
+```
+
+the resulting, filename should resemble:
+
+```
+LoginTest_20260908_143015.png
+```
