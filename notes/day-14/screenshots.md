@@ -3,3 +3,110 @@
 ## Goal
 
 Learn how screenshots become a professional debugging tool, then gradually build the Week 2 Login + Product Search automation project.
+
+**What I will learn today:**
+
+- Taking screenshots
+- Saving screenshots to files
+- Why screenshots are useful for debugging
+- How screenshots fit into test failure handling
+- Eventually: the Week 2 Login + Product Search workflow
+
+### Why screenshots?
+
+Imagine your automation does this:
+
+```
+Login
+   ↓
+Search product
+   ↓
+Click product
+   ↓
+Add to cart
+   ↓
+❌ Test fails
+```
+
+Your terminal says:
+
+```
+ElementClickInterceptedException
+```
+
+That's useful, but there's an important question:
+
+> **What did the browser actually look like when the failure happened?**
+
+Maybe:
+
+- a popup covered the button
+- the page hadn't finished loading
+- the wrong page appeared
+- the element was outside the viewport
+- a validation message appeared
+- your locator selected something unexpected
+
+A screenshot gives you **visual evidence of the browser state at that moment**.
+
+This is why screenshots aren't merely a "nice Selenium feature." In professional automation they're **failure evidence.**
+
+### The Selenium API
+
+The main interface is:
+
+```java
+TakesScreenshot
+```
+
+The important method is:
+
+```java
+getScreenShotAs(...);
+```
+
+Conceptually:
+
+```
+WebDriver
+   │
+   └── TakesScreenshot
+          │
+          └── getScreenshotAs(...)
+```
+
+Here's the basic idea:
+
+```java
+TakesScreenshot screenshot = (TakesScreenshot)driver:
+File source = screenshot.getScreenShotAs(OutputType.FILE);
+```
+
+**Think about this carefully**
+
+You already know:
+
+```java
+WebDriver driver = new ChromeDriver();
+```
+
+So why we need:
+
+```java
+(TakesScreenshot)driver;
+```
+
+?
+
+Because `WebDriver` itself doesn't define `getScreenshotAs()`.
+
+Instead, Selenium provides the screenshot capability through the `TakesScreenshot` interface.
+
+### Now let's actually save one
+
+Suppose your selenium code has:
+
+```java
+WebDriver driver = new ChromeDriver();
+driver.get("https://www.selenium.dev/selenium/web/web-form.html");
+```
