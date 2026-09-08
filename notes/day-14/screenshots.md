@@ -154,3 +154,90 @@ selenium-project/
 │   ├── product-search-failure.png
 │   └── cart-failure.png
 ```
+
+So now we need to learn **how to copy/save the captured screenshot to a location we control.**
+
+**Your exercise**
+
+Write the code yourself that does the following:
+
+**1.** Create a TakesScreenshot reference from driver.
+**2.** Take a screenshot using `getScreenshotAs(OutputType.FILE)`.
+**3.** Store the returned screenshot in a File variable.
+**4.** Print the file's path using:
+
+```java
+source.getAbsolutePath()
+```
+
+You should end up with something conceptually like:
+
+```
+// your code here
+```
+
+Don't worry about copying/saving it to a permanent location yet.
+
+**Your next exercise**
+
+Without me giving you the solution yet, think about this:
+
+We have:
+
+```java
+File source = screenshot.getScreenshotAs(OutputType.FILE);
+```
+
+and we want to get it into:
+
+```
+screenshots/homepage.png
+```
+
+**Question:** What Java mechanism would you use to copy the contents of one `File` to another file.
+
+### The Real Reason We Take Screenshots
+
+So far we've manually done:
+
+```
+Run test
+   ↓
+Take screenshot
+   ↓
+Save screenshot
+```
+
+But that's not very useful in a real test suite.
+
+We don't want to write:
+
+```java
+takeScreenshot();
+```
+
+After every single operation.
+
+**Instead, we want**
+
+```
+Test starts
+   ↓
+Test performs actions
+   ↓
+        ┌───────────────┐
+        │ Test succeeds │ → No screenshot necessary
+        └───────────────┘
+
+        OR
+
+        ┌──────────────┐
+        │ Test fails ❌ │
+        └──────────────┘
+                ↓
+        Capture screenshot
+                ↓
+        Save failure evidence
+```
+
+That's the professional use case.
