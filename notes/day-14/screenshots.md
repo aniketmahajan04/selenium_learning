@@ -416,3 +416,169 @@ the resulting, filename should resemble:
 ```
 LoginTest_20260908_143015.png
 ```
+
+### Making Failure Screenshots reliable
+
+Before we move to the week 2 project, I want to strengthen the failure-handling code just wrote.
+
+Your current flow is:
+
+```java
+catch(Exception e) {
+   System.err.println("Test failed due to: "+ e.message());
+   takeScreenshot(driver, generateFilename("WebFormFailure"));
+}
+```
+
+This works when the screenshot succeeds.
+
+But think about this scenario:
+
+```
+Test fails
+   ↓
+catch(Exception e)
+   ↓
+takeScreenshot()
+   ↓
+❌ IOException
+```
+
+Now the screenshot itself has failed.
+
+The danger is that the **original Selenium failure can become harder to diagnose.**
+
+**Professional debugging principle**
+
+When a test fails, we want to preserve both:
+
+```
+Original failure
+   +
+Failure evidence
+```
+
+For example:
+
+```
+❌ Test failed: NoSuchElementException
+ Screenshot: WebFormFailure_20260910_095100.png
+```
+
+If the screenshot itself fail:
+
+```
+❌ Test failed: NoSuchElementException
+⚠️ Screenshot capture failed: ...
+```
+
+We don't want the screenshot problem to completely obscure the original Selenium problem.
+
+**Your next exercise**:
+
+Modify your `catch` block so that:
+**1.** You **attempt the screenshot first**
+**2.** If screenshot capture fails, print a separate message screenshot capture failed.
+**3.** Regardless of whether screenshot capture succeeds, print **original exception.**
+
+You will need a nested `try/catch`
+
+**Next Understanding**
+
+Suppose this happens:
+
+```java
+driver.findElement(By.id("product-search")).sendKeys("Laptop");
+
+driver.findElement(By.id("search-button")).click();
+
+driver.findElement(By.id("laptop-product")).click();
+
+driver.findElement(By.id("add-to-cart")).click();
+```
+
+The final line throw:
+
+```
+ElementClickInterceptedException
+```
+
+You get a screenshot.
+
+**Here is the important question**
+
+The screenshot shows the browser at the moment of failure.
+
+**What kinds of things would you inspect in that screenshot to help determine why `add-to-cart` failed?**
+
+Give me **at least 3 things** you'd look for.
+
+For example, if `add-to-cart` failed, I'd inspect the screenshot for things like:
+
+**1. Are we actually on the expected product page?**
+**2. Is the add to cart button visible?**
+**3. Is a popup/model/overlay covering the button?**
+**4. Is there an error or validation message visible?**
+**5. Does the page look partially loaded or in unexpected state?**
+
+And then we'd combine that visual evidence with the exception:
+
+```
+Screenshot
+   +
+Exception
+   +
+Test logs
+   ↓
+Root-cause investigation
+```
+
+**One more exercise before we move on**
+
+Imagine your screenshot shows this:
+
+```
+┌──────────────────────────────────────┐
+│ Product: Laptop                      │
+│                                      │
+│ [ Add to Cart ]                      │
+│                                      │
+│        ┌──────────────────────┐      │
+│        │ 🔄 Loading...        │      │
+│        └──────────────────────┘      │
+└──────────────────────────────────────┘
+```
+
+And Selenium throws:
+
+```
+ElementClickInterceptedException
+```
+
+**Question**
+
+Based on the **screenshot + exception**, what do you think is the likely reason Selenium couldn't click the button?
+
+And more importantly:
+
+What Selenium concept from Days 8–9 would you use to make the test handle this situation more reliably?
+
+### Screenshot Utility
+
+You've now learned the fundamental screenshot workflow.
+
+Before we move to **Week 2 project**, I want you to make one final improvement to your utility itself to handle filename generation.
+
+Currently your method requires:
+
+```java
+takeScreenshot(driver, generateFilename("WebFormFailure"));
+```
+
+I'd like the utility itself to handle filename generation.
+
+So the caller should eventually be able to write:
+
+```java
+takeScreenshot(driver, "WebFormFailure");
+```

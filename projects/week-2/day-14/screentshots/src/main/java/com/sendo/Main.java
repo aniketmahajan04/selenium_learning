@@ -4,14 +4,15 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.nio.file.Files;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public class Main {
@@ -29,15 +30,16 @@ public class Main {
 
     public static void takeScreenshot(WebDriver driver, String filename) throws IOException {
         TakesScreenshot screenshot = (TakesScreenshot) driver;
-        File srcFiles = screenshot.getScreenshotAs(OutputType.FILE);
+        File srcFile = screenshot.getScreenshotAs(OutputType.FILE);
 
         Path screenshotsDirectory = Paths.get("./projects/week-2/day-14/screenshots_sele");
 
-        Path destinationFile = screenshotsDirectory.resolve(filename);
+        String generatedFilename = generateFileName(filename);
+        Path destinationFile = screenshotsDirectory.resolve(generatedFilename);
 
         Files.createDirectories(screenshotsDirectory);
 
-        Files.copy(srcFiles.toPath(), destinationFile, StandardCopyOption.REPLACE_EXISTING);
+        Files.copy(srcFile.toPath(), destinationFile);
     }
 
     static void main() {
@@ -46,8 +48,18 @@ public class Main {
         try {
             driver.get("https://www.selenium.dev/selenium/web/web-form.html");
 
-            takeScreenshot(driver, generateFileName("Homepage"));
-        } catch (IOException e) {
+            WebElement element = driver.findElement(
+                    By.id("this-does-not-exist"));
+        } catch (Exception e) {
+            try {
+
+                takeScreenshot(driver, "WebFormFailure");
+                System.out.println("Screenshot captured successfully.");
+            } catch (IOException io) {
+                System.err.println("Failed to capture screenshot: ");
+                io.printStackTrace();
+            }
+            System.err.println("Test Failed due to: ");
             e.printStackTrace();
 
         } finally {
